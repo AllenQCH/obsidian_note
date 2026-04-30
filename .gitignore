@@ -1,5 +1,6 @@
 .DS_Store
-.obsidian/workspace.json
-.obsidian/workspace-mobile.json
+.obsidian/
 .trash/
-
+/项目相关/
+*.tmp
+*.swp
