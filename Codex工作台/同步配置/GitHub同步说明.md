@@ -23,7 +23,7 @@ origin github-personal:AllenQCH/obsidian_note.git
 在本地仓库中运行：
 
 ```zsh
-cd /Users/heytea/Documents/HeyTea/codex-workspace/obsidian_note
+cd /Users/heytea/Documents/Obsidian\ Vault
 git pull --rebase
 git add .
 git commit -m "docs: update codex notes"
@@ -33,7 +33,7 @@ git push
 如果只是查看状态：
 
 ```zsh
-cd /Users/heytea/Documents/HeyTea/codex-workspace/obsidian_note
+cd /Users/heytea/Documents/Obsidian\ Vault
 git status --short --branch
 ```
 
