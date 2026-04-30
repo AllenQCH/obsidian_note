@@ -8,36 +8,19 @@ https://github.com/AllenQCH/obsidian_note
 
 ## 当前状态
 
-当前 Codex 沙箱无法解析 `github.com`，所以不能直接 clone、pull 或 push。已先在本地创建 Obsidian vault 结构，并准备好 Git remote。
+本地仓库已和 GitHub 仓库连通，并已完成首次推送。
 
-## 首次推送
+当前本地 remote：
 
-在本机有 GitHub 网络和认证的终端中运行：
-
-```zsh
-cd /Users/heytea/Documents/HeyTea/codex-workspace/obsidian_note
-git push -u origin main
+```text
+origin github-personal:AllenQCH/obsidian_note.git
 ```
 
-如果远端仓库已有内容，先拉取合并：
-
-```zsh
-cd /Users/heytea/Documents/HeyTea/codex-workspace/obsidian_note
-git pull --rebase origin main
-git push -u origin main
-```
-
-## 认证方式
-
-推荐使用 GitHub CLI：
-
-```zsh
-gh auth login
-```
-
-或使用已配置好的 SSH / HTTPS 凭据。不要把 token 写进笔记、脚本或 Git remote URL。
+说明：本机通过 `~/.ssh/config` 中的 `github-personal` SSH alias 认证 GitHub。
 
 ## 日常同步
+
+在本地仓库中运行：
 
 ```zsh
 cd /Users/heytea/Documents/HeyTea/codex-workspace/obsidian_note
@@ -47,3 +30,25 @@ git commit -m "docs: update codex notes"
 git push
 ```
 
+如果只是查看状态：
+
+```zsh
+cd /Users/heytea/Documents/HeyTea/codex-workspace/obsidian_note
+git status --short --branch
+```
+
+## 认证方式
+
+当前可用方式是 SSH alias：
+
+```zsh
+ssh -T github-personal
+```
+
+如果后续改用 HTTPS，推荐安装并使用 GitHub CLI：
+
+```zsh
+gh auth login
+```
+
+不要把 token 写进笔记、脚本或 Git remote URL。
