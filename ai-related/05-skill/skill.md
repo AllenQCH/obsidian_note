@@ -1,3 +1,14 @@
+---
+title: "1、skill是什么"
+source: "ai-related/05-skill/skill.md"
+author: "Allen"
+published: 
+created: 2026-05-07
+description: "Skill = 一个“结构化的能力模板”，本质是给 LLM 的可复用执行策略（prompt + 约束 + 工具用法）"
+tags: ["obsidian-note", "tech-note", "agent", "skill", "tooling", "prompt", "context", "llm"]
+type: "tech-note"
+status: "processed"
+---
 # 1、skill是什么
 Skill = 一个“结构化的能力模板”，本质是给 LLM 的可复用执行策略（prompt + 约束 + 工具用法）
 AI Skill = 一个“边界清晰、输入输出明确、可被 Agent 调用的能力模块”
@@ -270,3 +281,21 @@ step3()
 ```
 
 
+
+## 摘要
+
+- 待整理。
+
+## 核心内容
+
+- 待补充。
+
+## 可执行动作
+
+- [ ] 待确认。
+
+## 相关链接
+
+- [[Obsidian笔记写作规范]]
+- [[Skill目录与维护规范]]
+- [[Codex 启动加载顺序]]

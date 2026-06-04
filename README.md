@@ -1,3 +1,14 @@
+---
+title: "Obsidian Notes"
+source: "README.md"
+author: "Allen"
+published: 
+created: 2026-05-07
+description: "个人 Obsidian 笔记仓库。"
+tags: ["obsidian-note", "agent", "tooling", "cli"]
+type: "note"
+status: "processed"
+---
 # Obsidian Notes
 
 个人 Obsidian 笔记仓库。
@@ -12,3 +23,20 @@
 ## 同步说明
 
 本仓库保留笔记内容和必要图片，不提交 Obsidian 本地配置目录 `.obsidian/` 和系统文件。
+
+## 摘要
+
+- 待整理。
+
+## 核心内容
+
+- 待补充。
+
+## 可执行动作
+
+- [ ] 待确认。
+
+## 相关链接
+
+- [[Obsidian笔记写作规范]]
+- [[Codex 工作台]]

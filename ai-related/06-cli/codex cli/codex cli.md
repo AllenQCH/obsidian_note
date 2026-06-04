@@ -1,3 +1,14 @@
+---
+title: "0、Codex CLI 本质架构"
+source: "ai-related/06-cli/codex cli/codex cli.md"
+author: "Allen"
+published: 
+created: 2026-05-07
+description: "输入"
+tags: ["obsidian-note", "tech-note", "codex", "agent", "skill", "tooling", "context", "cli", "llm"]
+type: "tech-note"
+status: "processed"
+---
 # 0、Codex CLI 本质架构
 ```text
 输入  
@@ -871,3 +882,23 @@ memory/
 ├── project.md （长期规则）  
 ├── domain.md （领域知识）  
 └── task.md （当前任务）
+
+## 摘要
+
+- 待整理。
+
+## 核心内容
+
+- 待补充。
+
+## 可执行动作
+
+- [ ] 待确认。
+
+## 相关链接
+
+- [[cli的优势]]
+- [[Codex 权限体系：沙箱、审批、网络]]
+- [[codex实操]]
+- [[Codex 启动加载顺序]]
+- [[Codex Agent 能力与读取链路图]]

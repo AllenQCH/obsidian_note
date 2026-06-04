@@ -1,3 +1,14 @@
+---
+title: "cli的优势"
+source: "ai-related/06-cli/cli.md"
+author: "Allen"
+published: 
+created: 2026-05-07
+description: "全称：command line interface"
+tags: ["obsidian-note", "tech-note", "tooling", "context", "cli", "llm"]
+type: "tech-note"
+status: "processed"
+---
 全称：command line interface
 # cli的优势
 ## 1、token消耗小
@@ -18,3 +29,21 @@ cli只需要调用bash，然后内部自由组合，非常高效；
 # 未来趋势
 大部分使用cli，小部分需要MCP；不存在全面替代
  
+
+## 摘要
+
+- 待整理。
+
+## 核心内容
+
+- 待补充。
+
+## 可执行动作
+
+- [ ] 待确认。
+
+## 相关链接
+
+- [[0、Codex CLI 本质架构]]
+- [[codex实操]]
+- [[Codex 权限体系：沙箱、审批、网络]]

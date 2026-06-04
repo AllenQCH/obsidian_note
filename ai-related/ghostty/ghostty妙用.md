@@ -1,3 +1,14 @@
+---
+title: "用 Cmd+\\ 向右分屏，Cmd+- 向下分屏"
+source: "ai-related/ghostty/ghostty妙用.md"
+author: "Allen"
+published: 
+created: 2026-05-07
+description: "以下是 Ghostty 配置分屏布局并绑定文件路径的完整方案。"
+tags: ["obsidian-note", "tech-note", "cli"]
+type: "tech-note"
+status: "processed"
+---
 以下是 Ghostty 配置分屏布局并绑定文件路径的完整方案。
 
 ***
@@ -120,3 +131,19 @@ config-file = ?projects/work   # 可选文件，不存在不报错
 ```
 
 这样不同项目的 `keybind`、`working-directory` 等配置可以模块化维护。
+
+## 摘要
+
+- 待整理。
+
+## 核心内容
+
+- 待补充。
+
+## 可执行动作
+
+- [ ] 待确认。
+
+## 相关链接
+
+- [[0、Codex CLI 本质架构]]
