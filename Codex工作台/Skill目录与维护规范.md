@@ -29,13 +29,14 @@ status: "processed"
 
 ### 当前状态
 
-- 当前扫描到 skill 总数：`93`。
+- 当前扫描到 skill 总数：`94`。
 - 重复 skill 名称数量：`0`。
 - `release-workflow` 已新增，用于自动写提测文档和定位/打开流水线。
 - `dws` 重复项已处理：保留 `~/.codex/skills/dws`，归档 `~/.agents/skills/dws`。
 - `excel-json-analysis` 已新增，并已扩展到 CSV / 平铺表格场景，可从导出表中提取字段、展开列表、去重、生成新增数据 `INSERT` SQL，并默认附带插入前后查询校验 SQL。
 - `dbauto-export-agent` 已新增，用于一键拉起本地 dbauto 导出工作流、准备登录态并打开扩展界面。
 - `dbauto-sql-query` 已新增，用于通过 opencli 操作国内 dbauto SQL 查询页，并内置常用 HSP/POF 实例别名；当前以用户级目录为主，支持任意工作目录使用。
+- `multi-agent-framework-maintainer` 已新增，用于在新 session 中续接和维护个人 `~/.codex` 多 agent 四层框架，统一从 runtime config、agent docs 和 Obsidian 笔记重建上下文。
 
 ### 完整清单
 
@@ -79,6 +80,7 @@ status: "processed"
 | `java-coding-standards` | 1 | `/Users/heytea/.codex/skills/java-coding-standards` | Java coding standards for Spring Boot services: naming, immutability, Optional usage, stre |
 | `jpa-patterns` | 1 | `/Users/heytea/.codex/skills/jpa-patterns` | JPA/Hibernate patterns for entity design, relationships, query optimization, transactions, |
 | `mcp-server-patterns` | 1 | `/Users/heytea/.codex/skills/mcp-server-patterns` | Build MCP servers with Node/TypeScript SDK — tools, resources, prompts, Zod validation, st |
+| `multi-agent-framework-maintainer` | 2 | `/Users/heytea/.codex/skills/multi-agent-framework-maintainer` | 在新 session 中续接、维护和收敛个人 `~/.codex` 多 agent 四层框架，优先读取 runtime config、agent docs 与 Obsidian 现有沉淀。 |
 | `obsidian-note-writing` | 8 | `/Users/heytea/.codex/skills/obsidian-note-writing` | Create, normalize, or improve Obsidian notes with consistent YAML properties, folder routi |
 | `openai-docs` | 9 | `/Users/heytea/.codex/skills/.system/openai-docs` | Use when the user asks how to build with OpenAI products or APIs and needs up-to-date offi |
 | `openspec-demand-workflow` | 1 | `/Users/heytea/.codex/skills/openspec-demand-workflow` | Use when the user mentions openspec、需求改造、多服务改动、先确认方案、先看 diff、确认分支、需求号/需求名、提交前人工复核，或希望按规范沉淀 |
@@ -164,11 +166,14 @@ status: "processed"
 
 ## 变更记录
 
+- 2026-06-11：更新用户级 skill `/Users/heytea/.codex/skills/alidocs-test-delivery-doc`。新增按需求区域自动选择在线提测文档目标目录：`region=cn` 默认创建到《国内迭代》（`workspaceId=26116527504`，`folderId=P7QG4Yx2Jp7N1PAgi41lknj2V9dEq3XD`）；`region=intl` 必须创建到《海外迭代》，本地未配置海外 folderId 时会阻断并要求显式传入目录，避免落到空间根目录或错误文件夹。同步更新 skill 文档、脚本 dry-run 输出 `targetSource/targetFolderName`，并验证国内 dry-run 自动解析到《国内迭代》；最近更新时间：2026-06-11。
+- 2026-06-08：新增用户级 skill `/Users/heytea/.codex/skills/multi-agent-framework-maintainer`。用途：在新 session 中继续维护个人 `~/.codex` 多 agent 四层框架，不要求用户每次重复提供完整历史背景；默认优先读取 `/Users/heytea/Documents/HeyTea/codex-workspace/AGENTS.md`、`~/.codex/config.toml`、`~/.codex/agents/README.md`、`~/.codex/agents/docs/README.md` 以及 Obsidian 中的 `02-个人Codex多Agent改造计划`、`17-当前成果总清单` 重建上下文；来源目录：Codex 用户级 skills；启用状态：已启用；最近更新时间：2026-06-08。
 - 2026-05-15：更新外部 skill 仓库 `shop-ofc-skill/bk-pipeline/2.0.3/skills/bk-pipeline-create`。补充 HSP/BFC 环境约定：国内需求默认 `dev-hsp-1`，国际需求默认 `dev-intl-hsp-1`；同时为当前 `dhtInvoice` 发票仓库补充 `service/scm/bfc -> yc9e25 / dev-hsp-1 / hsp` 路由，用于需求 `p35_15805` 生成 BK 需求流水线配置；启用状态：本地外部技能仓库，未纳入当前 Codex 用户级 skills 自动扫描。
 - 2026-06-04：新增项目级 skill `/Users/heytea/Documents/HeyTea/code/dhtInvoice/.codex/skills/dbauto-sql-query`。用途：通过 opencli Browser Bridge 打开国内 dbauto SQL 查询页并执行只读查询，默认常用实例仅保留 3 个 MySQL：`hsp-ids`、`hsp-pof`、`hsp-pof-scm`；支持 `--list-dbs` 按实例展示数据库，`--list-tables` 按实例和库展示表，形成“选实例 -> 选库 -> 查表/SQL”的默认交互流程；已通过实例列表、库列表、表列表和生产 `center_hsp_invoice.hsp_goods_rate` 只读查询验证；最近更新时间：2026-06-04。
 - 2026-06-04：删除用户级副本 `/Users/heytea/.codex/skills/dbauto-sql-query`，避免与项目级版本产生漂移；当前仅保留项目级版本；最近更新时间：2026-06-04。
 - 2026-06-04：按用户确认恢复用户级 skill `/Users/heytea/.codex/skills/dbauto-sql-query`，使国内 dbauto 查询能力可在任意工作目录触发；用户级版本作为主版本，项目级 `/Users/heytea/Documents/HeyTea/code/dhtInvoice/.codex/skills/dbauto-sql-query` 可作为当前仓库副本保留；最近更新时间：2026-06-04。
 - 2026-06-04：更新 `dbauto-sql-query` 用户级与项目级副本，移除国内 dbauto `SQL上线` 页面说明，保留该 skill 仅用于在线只读 SQL 查询、实例/库/表列表能力；最近更新时间：2026-06-04。
+- 2026-06-07：更新用户级 skill `/Users/heytea/.codex/skills/dbauto-sql-query`。修复 `scripts/dbauto_sql_query.py` 的只读 SQL 判定：此前 `SHOW CREATE TABLE ...` 会被 `CREATE` 关键字误判为写 SQL 并拒绝执行；本次收紧实现为“先判定语句前缀是否为只读，再拦截真正危险写关键字”，保留对 `UPDATE/INSERT/DELETE/ALTER/TRUNCATE/...` 的阻断，同时允许 `SHOW CREATE TABLE` 这类只读元数据查询；已通过 `opencli doctor -v`、`--list-common-instances`、以及生产 `hsp-ids / center_hsp_invoice / SHOW CREATE TABLE hsp_goods_rate` 真实查询验证；最近更新时间：2026-06-07。
 - 2026-05-14：更新用户级 skill `/Users/heytea/.codex/skills/obsidian-note-writing`。新增 Obsidian 编号主题组织规则：整理主题目录时优先使用 `NN-Topic/NN-00-Topic-索引.md`、`NN-01-Topic-总览.md`、`NN-02-Topic-子主题.md`、`NN-99-Topic-原始长文归档.md` 命名，并要求同步更新内部链接、用 aliases 兼容旧标题；本次用于整理 `ai-related/01-LLM` 与 `ai-related/02-RAG`；启用状态：已启用；最近更新时间：2026-05-14。
 - 2026-05-14：再次优化用户级 skill `/Users/heytea/.codex/skills/alidocs-test-delivery-doc` 的可核对性。dry-run 结果新增 `headerStylePlan`，在线创建结果中的每个 sheet 新增 `styleRanges`，用于明确展示哪些表头区域被加粗；同步收敛 `build_header_style_plan` 实现，去除无效参数；已通过本地回归、`quick_validate.py` 和真实海外提测文档 `https://alidocs.dingtalk.com/i/nodes/Qnp9zOoBVBZzojBKsLzKgK5EV1DK0g6l` 验证；最近更新时间：2026-05-14。
 - 2026-05-15：更新用户级 skill `/Users/heytea/.codex/skills/alidocs-test-delivery-doc`。当提测证据未显式提供负责人和 `developer.name/id` 时，新增从当前工作目录下匹配服务仓库的 `git config user.name` 自动回填负责人逻辑，优先读取仓库本地配置；同步补充脚本回归测试与 skill 文档，并用需求 `p35_15805` 的真实提测数据验证 `服务清单` 负责人列可自动带出 `qichenghui`；最近更新时间：2026-05-15。

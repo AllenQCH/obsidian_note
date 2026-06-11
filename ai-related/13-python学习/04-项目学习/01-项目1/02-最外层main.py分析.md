@@ -44,6 +44,8 @@ app.include_router(
 async def root():
     return {"message": "Hello Bigger Applications!"}
 ```
+**main.py 就是 FastAPI 项目的启动入口，负责组装整个应用（路由、中间件、配置等），最后暴露一个 `app` 对象给 Uvicorn 启动。**
+
 ## 这段代码本质在展示什么
 其实核心只有一句：FastAPI 的“工程化”
 即：

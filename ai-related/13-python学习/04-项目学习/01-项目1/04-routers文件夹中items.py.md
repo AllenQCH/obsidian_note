@@ -38,7 +38,12 @@ async def update_item(item_id: str):
     return {"item_id": item_id, "name": "The great Plumbus"}
 ```
 
-
+其中：
+- `@` = 装饰器语法
+- `router` = 路由收集器
+- `get("/")` = 注册 GET 请求路径
+- 下面的函数 = 请求处理函数（Handler）
+- 
 # 1. 这整个文件的作用
 这个文件本质是：items 模块的路由文件
 负责处理：/items相关接口。
