@@ -114,6 +114,7 @@ status: "processed"
 - `tool_github_sync_operator`
 - `tool_trace_log_operator`
 - `tool_xxljob_execute_once_operator`
+- `tool_weekly_report_operator`
 
 当前只是候选或后续方向：
 
@@ -217,6 +218,27 @@ gate 层只负责 `go / warn / block` 放行判断，不执行具体工具动作
 3. operator 只调用现有已验证 skill / script，不重新发明执行器。
 4. 所有新 agent 必须遵守统一 contract。
 5. 高风险动作必须进 `tool-agent-matrix`。
+
+### 2026-06-12 补充：周报查询 operator
+
+本次新增 active tool agent：
+
+- `tool_weekly_report_operator`
+
+定位：
+
+- 只读查询蓝鲸 `智慧门店/b1af00` 的周报相关任务；
+- 按 `relation=CREATED`、TASK、预计开始/结束时间都落在目标周内的规则过滤；
+- 本周工作从工时插件 `records[].jobContent` 提取；
+- 下周工作按同口径任务输出，无任务时结合上下文输出 `请假` 或 `暂无已安排任务`；
+- 后三周需求通过任务关联对象 `issue_relation` 读取需求名称。
+
+边界：
+
+- 不提交工时；
+- 不变更任务状态；
+- 不创建任务；
+- 不填写 AliDocs 表格。
 
 补充当前已经验证过的本地规则：
 
