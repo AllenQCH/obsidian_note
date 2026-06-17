@@ -115,6 +115,7 @@ status: "processed"
 - `tool_trace_log_operator`
 - `tool_xxljob_execute_once_operator`
 - `tool_weekly_report_operator`
+- `tool_gmail_classifier_operator`
 
 当前只是候选或后续方向：
 
@@ -240,6 +241,28 @@ gate 层只负责 `go / warn / block` 放行判断，不执行具体工具动作
 - 不创建任务；
 - 不填写 AliDocs 表格。
 
+### 2026-06-17 补充：Gmail 归类 operator
+
+本次新增 active tool agent：
+
+- `tool_gmail_classifier_operator`
+
+定位：
+
+- 负责把 `allenqi568@gmail.com` 的 Gmail Inbox 按既有 label 体系归类；
+- 默认只处理已知来源和已知主题模式；
+- 通过 Hermes Google Workspace 的 `google_api.py` 走 Gmail API；
+- 本机 launchd 每周三 09:30 自动触发一次执行模式；
+- 每次运行写入本地 JSON 报告到 `~/.codex/logs/gmail-classifier/`。
+
+边界：
+
+- 默认脚本模式是 dry-run，只有显式 `--execute` 或 launchd 定时任务才移动邮件；
+- 未知个人发件人保留在 Inbox，不默认移动到 `99_低优先归档`；
+- 不删除邮件；
+- 不打印 OAuth token、cookie 或邮件正文；
+- 当前无人值守路径要求 `~/.hermes/google_token.json` 存在，否则只返回 `auth_required=true`。
+
 补充当前已经验证过的本地规则：
 
 1. 在线提测文档创建必须按需求区域落到固定目录：国内需求放《国内迭代》，海外需求放《海外迭代》；目录无法解析时阻断创建，不退回空间根目录。
@@ -254,6 +277,7 @@ gate 层只负责 `go / warn / block` 放行判断，不执行具体工具动作
 9. `closeout` 仍然属于 `stage` 层，不单独再造第五层。
 10. active / draft 必须分开维护：已经注册进 `config.toml` 的才算 active，只有 `.draft.*`、workflow 草案或 contract 草案的不算运行态。
 11. `2026-06-11` 起新增 `tool_xxljob_execute_once_operator`：它是一个窄边界的生产运维 tool agent，只允许通过 opencli 对生产 XXL-Job `jobId=280` 执行 `执行一次`，禁止保存 `更新任务` 和修改任何任务配置。
+12. `2026-06-17` 起新增 `tool_gmail_classifier_operator`：它是一个窄边界的 Gmail 归类 tool agent，默认 dry-run，定时任务每周三 09:30 触发执行；如果 Gmail OAuth token 缺失，返回 `auth_required=true`，不走无人值守浏览器 UI。
 
 ### 第一阶段完成后的下一步
 
