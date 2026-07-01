@@ -116,6 +116,7 @@ status: "processed"
 - `tool_xxljob_execute_once_operator`
 - `tool_weekly_report_operator`
 - `tool_gmail_classifier_operator`
+- `tool_auth_permission_seed_operator`
 
 当前只是候选或后续方向：
 
@@ -276,8 +277,10 @@ gate 层只负责 `go / warn / block` 放行判断，不执行具体工具动作
 8. 当前主配置真源只有 `~/.codex/config.toml`，不要再恢复 `config.template.toml` 双轨维护。
 9. `closeout` 仍然属于 `stage` 层，不单独再造第五层。
 10. active / draft 必须分开维护：已经注册进 `config.toml` 的才算 active，只有 `.draft.*`、workflow 草案或 contract 草案的不算运行态。
+10.1 用户说“实现 agent / 新增 agent / 做成 agent”时，默认交付物必须是全局可用的 `.toml` agent，并注册到 `~/.codex/config.toml`；harness markdown、项目流程文档、OpenSpec 或 prompt 模板只能作为配套材料，不能单独算 agent 已实现。
 11. `2026-06-11` 起新增 `tool_xxljob_execute_once_operator`：它是一个窄边界的生产运维 tool agent，只允许通过 opencli 对生产 XXL-Job `jobId=280` 执行 `执行一次`，禁止保存 `更新任务` 和修改任何任务配置。
 12. `2026-06-17` 起新增 `tool_gmail_classifier_operator`：它是一个窄边界的 Gmail 归类 tool agent，默认 dry-run，定时任务每周三 09:30 触发执行；如果 Gmail OAuth token 缺失，返回 `auth_required=true`，不走无人值守浏览器 UI。
+13. `2026-07-01` 起新增 `tool_auth_permission_seed_operator`：它是一个窄边界的 HSP 权限生成与排查 tool agent，负责权限定义初始化 SQL、执行前后校验 SQL、接口权限路径核对和角色授权建议；默认不执行写 SQL，不把个人授权写入生产初始化脚本。
 
 ### 第一阶段完成后的下一步
 

@@ -22,16 +22,17 @@ status: "processed"
 
 | 根目录 | 数量 | 说明 |
 |---|---:|---|
-| `codex_user` | 55 | Codex 用户级 skill，默认主目录 |
+| `codex_user` | 56 | Codex 用户级 skill，默认主目录 |
 | `agents_user` | 19 | Agents/Lark 等外部工具 skill |
 | `superpowers` | 14 | Superpowers 流程类 skill |
 | `plugin_cache` | 4 | 插件缓存自带 skill，不建议手工修改 |
 
 ### 当前状态
 
-- 当前扫描到 skill 总数：`94`。
+- 当前扫描到 skill 总数：`95`。
 - 重复 skill 名称数量：`0`。
 - `release-workflow` 已新增，用于自动写提测文档和定位/打开流水线。
+- `opencli-browser-reuse` 已新增，用于复用稳定 opencli Browser Bridge session，减少 Chrome 中 `OpenCLI Browser` 标签堆积。
 - `dws` 重复项已处理：保留 `~/.codex/skills/dws`，归档 `~/.agents/skills/dws`。
 - `excel-json-analysis` 已新增，并已扩展到 CSV / 平铺表格场景，可从导出表中提取字段、展开列表、去重、生成新增数据 `INSERT` SQL，并默认附带插入前后查询校验 SQL。
 - `dbauto-export-agent` 已新增，用于一键拉起本地 dbauto 导出工作流、准备登录态并打开扩展界面。
@@ -95,6 +96,7 @@ status: "processed"
 | `security-scan` | 1 | `/Users/heytea/.codex/skills/security-scan` | Scan your Claude Code configuration (.claude/ directory) for security vulnerabilities, mis |
 | `skill-creator` | 10 | `/Users/heytea/.codex/skills/.system/skill-creator` | Guide for creating effective skills. This skill should be used when users want to create a |
 | `skill-installer` | 8 | `/Users/heytea/.codex/skills/.system/skill-installer` | Install Codex skills into $CODEX_HOME/skills from a curated list or a GitHub repo path. Us |
+| `opencli-browser-reuse` | 3 | `/Users/heytea/.codex/skills/opencli-browser-reuse` | 复用 opencli 浏览器探索 session 的 skill。按常见内部域名路由固定 session，并支持一次性读取任务自动收口。 |
 | `springboot-patterns` | 1 | `/Users/heytea/.codex/skills/springboot-patterns` | Spring Boot architecture patterns, REST API design, layered services, data access, caching |
 | `springboot-security` | 1 | `/Users/heytea/.codex/skills/springboot-security` | Spring Security best practices for authn/authz, validation, CSRF, secrets, headers, rate l |
 | `springboot-tdd` | 1 | `/Users/heytea/.codex/skills/springboot-tdd` | Test-driven development for Spring Boot using JUnit 5, Mockito, MockMvc, Testcontainers, a |
@@ -166,6 +168,9 @@ status: "processed"
 
 ## 变更记录
 
+- 2026-06-23：更新用户级 skill `/Users/heytea/.codex/skills/sso-login`。将浏览器打开动作接入 `/Users/heytea/.codex/skills/opencli-browser-reuse/scripts/opencli_reuse.sh`，继续沿用稳定 session `heytea-sso-cn`，避免 SSO 检查和登录刷新为每次请求创建新的 opencli Browser Bridge session；已通过真实 `--platform cn --status` 校验；最近更新时间：2026-06-23。
+- 2026-06-23：更新用户级 skill `/Users/heytea/.codex/skills/dbauto-sql-query`。默认 session 由 `dbauto-sql` 收敛为稳定名 `dbauto-query`，并将页面打开动作接入 `opencli-browser-reuse` wrapper；已通过脚本 `--list-common-instances` 链路和固定 session URL/标题校验；最近更新时间：2026-06-23。
+- 2026-06-23：新增用户级 skill `/Users/heytea/.codex/skills/opencli-browser-reuse`。用途：当 Codex/Hermes 被要求“用 opencli 探索网页/内部站点”时，默认复用稳定 Browser Bridge session，而不是为每次探索创建新的 session 名；内置脚本 `scripts/opencli_reuse.sh` 会按域名自动映射 `heytea-sso-cn`、`dbweb-explore`、`dbauto-query`、`bk-console` 等固定 session，并支持 `--close-after` 对一次性读取任务自动收口。来源目录：Codex 用户级 skills；启用状态：已启用；已通过 `superpowers-codex use-skill opencli-browser-reuse`、脚本 `--help`、真实 `dbweb.test.heytea.com` 打开验证，以及 Chrome `OpenCLI Browser` 标签计数回归校验；最近更新时间：2026-06-23。
 - 2026-06-11：更新用户级 skill `/Users/heytea/.codex/skills/alidocs-test-delivery-doc`。新增按需求区域自动选择在线提测文档目标目录：`region=cn` 默认创建到《国内迭代》（`workspaceId=26116527504`，`folderId=P7QG4Yx2Jp7N1PAgi41lknj2V9dEq3XD`）；`region=intl` 必须创建到《海外迭代》，本地未配置海外 folderId 时会阻断并要求显式传入目录，避免落到空间根目录或错误文件夹。同步更新 skill 文档、脚本 dry-run 输出 `targetSource/targetFolderName`，并验证国内 dry-run 自动解析到《国内迭代》；最近更新时间：2026-06-11。
 - 2026-06-08：新增用户级 skill `/Users/heytea/.codex/skills/multi-agent-framework-maintainer`。用途：在新 session 中继续维护个人 `~/.codex` 多 agent 四层框架，不要求用户每次重复提供完整历史背景；默认优先读取 `/Users/heytea/Documents/HeyTea/codex-workspace/AGENTS.md`、`~/.codex/config.toml`、`~/.codex/agents/README.md`、`~/.codex/agents/docs/README.md` 以及 Obsidian 中的 `02-个人Codex多Agent改造计划`、`17-当前成果总清单` 重建上下文；来源目录：Codex 用户级 skills；启用状态：已启用；最近更新时间：2026-06-08。
 - 2026-05-15：更新外部 skill 仓库 `shop-ofc-skill/bk-pipeline/2.0.3/skills/bk-pipeline-create`。补充 HSP/BFC 环境约定：国内需求默认 `dev-hsp-1`，国际需求默认 `dev-intl-hsp-1`；同时为当前 `dhtInvoice` 发票仓库补充 `service/scm/bfc -> yc9e25 / dev-hsp-1 / hsp` 路由，用于需求 `p35_15805` 生成 BK 需求流水线配置；启用状态：本地外部技能仓库，未纳入当前 Codex 用户级 skills 自动扫描。
@@ -184,6 +189,7 @@ status: "processed"
 - 2026-05-25：新增用户级 skill `/Users/heytea/.codex/skills/excel-json-analysis`。用途：从 Excel 导出的 JSON 列中提取嵌套字段、展开列表、去重并生成新工作簿；已通过 `quick_validate.py`、`--help` 校验和真实样本 `export_20260525_151155.xlsx` 验证；最近更新时间：2026-05-25。
 - 2026-05-26：更新用户级 skill `/Users/heytea/.codex/skills/excel-json-analysis`。扩展平铺 CSV / Excel 台账场景：当用户要求基于表格生成新增数据 `INSERT` SQL 时，skill 现在要求同回合同步生成插入前 `COUNT` / 明细查询和插入后回查 SQL；已用真实样本 `0526发票助手灰度计划 (1).csv` 验证字段映射、空行过滤、`13% -> 0.13` 归一化以及查询 SQL 产物；最近更新时间：2026-05-26。
 - 2026-05-27：新增用户级 skill `/Users/heytea/.codex/skills/dbauto-export-agent`。用途：作为 dbauto 导出工具的本地 agent 入口，转调 `/Users/heytea/Documents/new_tools/dbauto_export_tool/start-agent.sh`，统一完成后端拉起、dbauto 登录准备和扩展界面打开；已通过 `quick_validate.py`、`use-skill` 加载、wrapper `--help` 与真实 `--env bj --status-only` 校验；最近更新时间：2026-05-27。
+- 2026-06-24：更新用户级 skill `/Users/heytea/.codex/skills/dbauto-export-agent`。新增硬规则：当用户要求“导出 dbauto 数据”时，Codex 必须严格停留在成熟的 dbauto export agent 工作流内，禁止私自退化到 `dbauto-sql-query`、`opencli browser eval`、自定义 Python 分页、手工 CSV 拼接或擅自改写 SQL 语义；导出失败时必须先调试现有 agent / 本地导出工具链，而不是切换实现路径；最近更新时间：2026-06-24。
 - 2026-05-14：更新用户级 skill `/Users/heytea/.codex/skills/alidocs-test-delivery-doc`。根据参考提测文档 `https://alidocs.dingtalk.com/i/nodes/93NwLYZXWygl1LqZCZzbGwavJkyEqBQm` 优化模板生成：锁定 6 个 sheet 顺序（服务清单、提测配置清单-TEST、提测配置清单-PROD、数据库脚本、定时任务 XXL-JOB、发布流程），文档顶层标题按 `需求号 需求标题（国内/海外）` 区分，缺失数据来源时单元格保持为空，不再写 `待确认`；脚本新增默认首 sheet 复用计划与 `dws sheet.update_sheet` CLI 未暴露限制说明；已通过模板测试、示例 dry-run 与 `quick_validate.py` 校验；最近更新时间：2026-05-14。
 - 2026-05-15：更新外部 skill 仓库 `shop-ofc-skill/bk-pipeline/2.0.3/skills/bk-pipeline-create`：将“测试发版 / 开发发版”纳入 step1/step2 配置流，新增 `pipelines[].deployRole` 确认项并在 step2 初始化基础信息时按配置传给 BK；同时新增 `pipelines[].skipGrayEnv` 作为“是否跳过灰度环境”确认项，当前仅记录在需求 JSON 和控制台提示中，未自动下发到 BK（本地尚未确认稳定入参字段）；已补充 `tests/test_run_pipeline.py` 并通过 `py_compile`、`unittest discover` 和离线 mock 的 step1 配置生成校验；启用状态：本地外部技能仓库，未纳入当前 Codex 用户级 skills 自动扫描。
 - 2026-05-13：更新外部 skill 仓库 `shop-ofc-skill/bk-pipeline/2.0.3/skills/bk-pipeline-create` 的 `config/release-excludes.json`，将 `hsp-ims-lowcost-domain` 加入 deploy-only 服务排除名单；启用状态：本地外部技能仓库，未纳入当前 Codex 用户级 skills 自动扫描。
