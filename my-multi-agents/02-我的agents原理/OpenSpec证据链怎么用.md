@@ -242,6 +242,17 @@ flowchart TB
 
 一句话：**让你的 agent 当「驱动证据链纪律的运行时」**——control 路由时绑对象、stage 产出进固定槽位、tool 跑完落可复现证据+claim、gate 放行前查证据链是否完整。
 
+### 落地状态（2026-07-06 已实施）
+
+四个对接点已全部写进本地 `~/.codex` 四层框架的 agent 定义，**opt-in**：只有 `control_request_router` 判定 `object_type != none`（initiative/investigation/plugin_project）时才强制证据链纪律；纯本地操作（周报、gmail、obsidian 写、dbauto 导出运行时、定时任务）保持 `object_type = none`，走原流程不受影响。
+
+- [x] **点 1 路由绑对象**：`control/control_request_router.toml` 增加 OpenSpec 对象绑定段 + 契约字段 `object_type / object_binding / object_path`；只分类不建对象，脚手架命令进 `next_actions`。
+- [x] **点 2 stage→槽位**：`control/control_stage_orchestrator.toml` 全程透传对象 + stage→slot 映射表；五个 `stage_*` agent 各自写入固定槽位（findings/design/tasks/review）并强制打 claim，禁平行 md。
+- [x] **点 3 tool 产物变证据**：`tool_trace_log_operator` / `tool_dbauto_sql_operator` 在有 `object_path` 时把可复现产物落 `artifacts/evidence/<slot>/`，结论转 claim 候选（可信度+来源）。
+- [x] **点 4 gate 消费 claims**：`gate/gate_stage_evaluator.toml` 把抽象「产物齐全」落成具体证据链检查（等价 `bin/check-claims` + `validate-workspace`）：槽位文件在、claims.yaml 每条结论有 claim、pending 带 staleDays+反证、evidence 文件存在且可复现；不全则 `block`。
+
+配套：契约 `agents/docs/agent-contracts.md` 新增对象/claim/evidence 字段与「Evidence-Chain Fields」共享段；新增单一真相文档 `agents/docs/openspec-evidence-chain-integration.md`（运行时侧对接规范），并登记进 `agents/docs/README.md`。
+
 ## 相关链接
 
 - [[阅读顺序-先Xuetao再我的agents]]
