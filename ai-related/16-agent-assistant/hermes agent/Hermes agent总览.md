@@ -19,3 +19,4 @@ status: "processed"
 ## 笔记
 
 - [[Hermes agent本机能力是什么]]
+- [[01-Hermes agent文件夹介绍]]
