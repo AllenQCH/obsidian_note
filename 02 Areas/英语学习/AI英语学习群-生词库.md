@@ -208,4 +208,4 @@ status: processed
 
 ## 相关链接
 
-- [[Codex工作台/Obsidian笔记写作规范]]
+- [[Codex工作台/Codex配置和写作规范/Obsidian笔记怎么写]]

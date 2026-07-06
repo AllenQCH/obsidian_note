@@ -45,5 +45,5 @@ github-personal:AllenQCH/obsidian_note.git
 
 ## 相关链接
 
-- [[Obsidian笔记写作规范]]
-- [[Codex 工作台]]
+- [[Obsidian笔记怎么写]]
+- [[先看这里-Codex工作台总览]]
