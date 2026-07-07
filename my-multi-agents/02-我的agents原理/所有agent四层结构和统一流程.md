@@ -28,15 +28,19 @@ status: "processed"
 
 ```text
 用户请求
--> control_request_router 先判断任务类型
+-> control_request_router 先判断任务类型（改代码则标 will_change_code）
 -> control_stage_orchestrator 选择阶段和下一批 agent
 -> stage_task_planner / stage_investigation_planner 定义边界
--> stage_execution_runner 编排具体执行
+-> gate_stage_evaluator(gate_design_confirmed) 改代码前必须人工确认（硬门禁）
+-> stage_execution_runner 只改代码，不 commit/push
 -> tool_* agent 做具体动作
--> gate_stage_evaluator 判断 go / warn / block
+-> stage_test_runner 测试角色主导：设计+执行测试，判 pass/fail
+-> gate_stage_evaluator(gate_test_passed) 测试通过才允许 commit/push（硬门禁）
 -> stage_integration_orchestrator 汇总多工具结果
 -> stage_closeout_reporter 收口说明
 ```
+
+> 2026-07-07 加固：凡是改代码的开发流程，都强制两道硬门禁——改代码前人工确认 `gate_design_confirmed`、代码后由测试角色 `stage_test_runner` 主导且 `gate_test_passed` 通过才 push。详见 [[开发流程强制门禁改造]]。
 
 重点不是把每个场景做成一个大 agent，而是让 controller 从任务类型找到正确的小 agent 链。
 
@@ -55,7 +59,8 @@ status: "processed"
 | --- | --- |
 | `stage_task_planner` | 已知目标的执行型任务，先规划输入、输出、工具链 |
 | `stage_investigation_planner` | 原因不明的问题，先定义证据链，不直接执行 |
-| `stage_execution_runner` | 按顺序跑已选工具，记录执行事实 |
+| `stage_execution_runner` | 按顺序跑已选工具，记录执行事实；改代码只在确认后，且不自行 commit/push |
+| `stage_test_runner` | 测试角色：给改动代码设计+执行测试，判 pass/fail，卡住 commit/push |
 | `stage_integration_orchestrator` | 多个工具或多份产物之间做汇总和交接 |
 | `stage_closeout_reporter` | 最终说明做到了哪里、有哪些证据、还剩什么 |
 

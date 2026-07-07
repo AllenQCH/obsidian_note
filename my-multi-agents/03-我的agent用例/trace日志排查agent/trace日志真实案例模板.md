@@ -41,7 +41,7 @@ status: "processed"
 
 - investigation 类型任务
 - trace 日志证据提取
-- draft 候选的真实验证
+- 历史 draft 阶段的真实验证记录
 
 ### 记录模板
 

@@ -4,7 +4,7 @@ source: "conversation: Codex chat 2026-06-07"
 author: "Codex"
 published:
 created: 2026-06-07
-description: "把 trace-log draft 在真实任务里的执行顺序压成一页操作卡片，方便拿到 traceId 时直接照着走。"
+description: "把 trace-log 在真实任务里的执行顺序压成一页操作卡片，方便拿到 traceId 时直接照着走。"
 tags: ["codex", "agent", "trace", "investigation", "playbook"]
 type: "workflow"
 status: "processed"

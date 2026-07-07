@@ -43,6 +43,7 @@ control_request_router
 -> stage_task_planner / stage_investigation_planner
 -> stage_execution_runner
 -> tool_* operator
+-> stage_test_runner（代码改动后）
 -> gate_stage_evaluator
 -> stage_integration_orchestrator
 -> stage_closeout_reporter
@@ -288,8 +289,8 @@ control_request_router
 | 层级 | Agents |
 |---|---|
 | control | `control_request_router`、`control_stage_orchestrator` |
-| stage | `stage_task_planner`、`stage_investigation_planner`、`stage_execution_runner`、`stage_integration_orchestrator`、`stage_closeout_reporter` |
-| tool | `tool_sso_operator`、`tool_dbauto_operator`、`tool_dbauto_sql_operator`、`tool_excel_operator`、`tool_obsidian_operator`、`tool_github_sync_operator`、`tool_trace_log_operator` |
+| stage | `stage_task_planner`、`stage_investigation_planner`、`stage_execution_runner`、`stage_test_runner`、`stage_integration_orchestrator`、`stage_closeout_reporter` |
+| tool | `tool_sso_operator`、`tool_dbauto_operator`、`tool_dbauto_sql_operator`、`tool_excel_operator`、`tool_obsidian_operator`、`tool_github_sync_operator`、`tool_github_web_operator`、`tool_trace_log_operator`、`tool_cls_log_query_operator`、`tool_xxljob_execute_once_operator`、`tool_weekly_report_operator`、`tool_gmail_classifier_operator`、`tool_personal_migration_curator`、`tool_invoice_application_full_flow_delete_operator`、`tool_auth_permission_seed_operator`、`tool_intl_pof_sh_confirm_operator`、`tool_bk_pipeline_operator` |
 | gate | `gate_stage_evaluator` |
 
 ### trace-log 当前状态

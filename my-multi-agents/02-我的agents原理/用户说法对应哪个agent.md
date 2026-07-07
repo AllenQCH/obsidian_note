@@ -127,7 +127,7 @@ status: "processed"
 
 1. 以后如果对一句话到底该走哪个 agent 还有点模糊，先回来看这篇。
 2. 如果后面新增 active agent，可以继续按这篇的格式补“用户常见说法 -> agent 链”。
-3. 如果 investigation 任务后面要转 trace-log draft 实操，直接跳到 [[trace日志真实任务怎么记录]]。
+3. 如果 investigation 任务后面要转 trace-log 复盘实操，直接跳到 [[trace日志真实任务怎么记录]]。
 
 ## 相关链接
 

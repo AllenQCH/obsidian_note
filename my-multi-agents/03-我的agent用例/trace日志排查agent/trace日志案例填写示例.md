@@ -4,7 +4,7 @@ source: "conversation: Codex chat 2026-06-07"
 author: "Codex"
 published:
 created: 2026-06-07
-description: "给 trace-log draft 一份完整填写样例，方便下次真实 traceId 排查时直接照着填。"
+description: "给 trace-log 排查一份完整填写样例，方便下次真实 traceId 排查时直接照着填。"
 tags: ["codex", "agent", "trace", "investigation", "sample"]
 type: "workflow"
 status: "processed"

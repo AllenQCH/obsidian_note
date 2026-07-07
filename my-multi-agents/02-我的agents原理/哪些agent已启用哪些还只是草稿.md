@@ -59,6 +59,7 @@ status: "processed"
 | stage | `stage_task_planner` | active | 执行型计划 |
 | stage | `stage_investigation_planner` | active | 排查型计划 |
 | stage | `stage_execution_runner` | active | 执行链协调 |
+| stage | `stage_test_runner` | active | 代码改动后的测试设计、执行和 pass / fail 判定 |
 | stage | `stage_integration_orchestrator` | active | 多结果整合 |
 | stage | `stage_closeout_reporter` | active | 最终收口 |
 | tool | `tool_sso_operator` | active | SSO 登录态准备 |
@@ -67,6 +68,17 @@ status: "processed"
 | tool | `tool_excel_operator` | active | Excel / JSON 提取去重 |
 | tool | `tool_obsidian_operator` | active | 本地 Obsidian 写入 |
 | tool | `tool_github_sync_operator` | active | GitHub 同步 |
+| tool | `tool_github_web_operator` | active | GitHub 网页设置和浏览器确认类动作 |
+| tool | `tool_trace_log_operator` | active | traceId 时间线和第一异常点整理 |
+| tool | `tool_cls_log_query_operator` | active | 腾讯云 CLS 日志查询和第一错误证据提取 |
+| tool | `tool_xxljob_execute_once_operator` | active | 固定发票 XXL-Job `jobId=280` 执行一次 |
+| tool | `tool_weekly_report_operator` | active | 蓝鲸周报只读查询和格式化 |
+| tool | `tool_gmail_classifier_operator` | active | Gmail Inbox label 分类 |
+| tool | `tool_personal_migration_curator` | active | 个人 agent / skill 可迁移资源整理 |
+| tool | `tool_invoice_application_full_flow_delete_operator` | active | 发票申请单全链路删除包生成 |
+| tool | `tool_auth_permission_seed_operator` | active | HSP 权限种子 SQL 和无权限链路诊断 |
+| tool | `tool_intl_pof_sh_confirm_operator` | active | 海外 POF 收货单满数量确认 curl 包准备 |
+| tool | `tool_bk_pipeline_operator` | active | 蓝鲸需求流水线和服务子流水线操作 |
 | gate | `gate_stage_evaluator` | active | 统一 go / warn / block |
 
 ### 当前 Draft Matrix

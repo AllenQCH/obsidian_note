@@ -340,7 +340,7 @@ control -> stage -> tool -> gate -> closeout
 1. 以后先不要从文件名猜 agent 做什么，先按这篇速查。
 2. 真遇到 dbauto 场景时，先区分是 export bootstrap，还是 read-only SQL。
 3. 真遇到“不知道为什么错了”的场景时，先走 investigation，不要直接 execution。
-4. 如果 investigation 后面要继续推进 trace-log draft，直接接 [[trace日志真实任务怎么记录]]，不要自己重新拼顺序。
+4. 如果 investigation 后面要继续推进 trace-log 复盘，直接接 [[trace日志真实任务怎么记录]]，不要自己重新拼顺序。
 
 ## 相关链接
 

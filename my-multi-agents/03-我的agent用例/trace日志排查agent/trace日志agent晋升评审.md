@@ -4,7 +4,7 @@ source: "conversation: Codex chat 2026-06-07"
 author: "Codex"
 published:
 created: 2026-06-07
-description: "在 trace-log draft 累积到 3 个以上真实案例后，用固定评审表判断是否可以进入 active。"
+description: "保留 trace-log 从 draft 进入 active 前的历史晋升评审表，现在主要用于周期性复盘输出质量。"
 tags: ["codex", "agent", "trace", "investigation", "review"]
 type: "workflow"
 status: "processed"

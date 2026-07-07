@@ -4,7 +4,7 @@ source: "conversation: Codex chat 2026-06-07"
 author: "Codex"
 published:
 created: 2026-06-07
-description: "把 trace-log draft 从纯概念草案推进到可验证草案：先定义什么样的输入才算一次标准化的真实调查入口。"
+description: "保留 trace-log 历史 draft 阶段的最小执行入口定义，用于当前 active agent 的真实调查标准化。"
 tags: ["codex", "agent", "trace", "investigation", "draft"]
 type: "workflow"
 status: "processed"

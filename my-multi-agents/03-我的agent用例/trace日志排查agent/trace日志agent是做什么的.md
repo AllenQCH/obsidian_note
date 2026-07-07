@@ -109,8 +109,8 @@ status: "processed"
 
 因为这篇直接帮你判断：
 
-- 它现在还不是 active
-- 不能因为已经有 `.draft.toml` 就误以为运行态会调用它
+- 它现在已经是 active agent
+- 历史 `.draft.toml` 和样板只用于复盘，不再代表运行态状态
 
 然后再看：
 

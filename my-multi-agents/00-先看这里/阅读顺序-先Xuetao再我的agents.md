@@ -265,7 +265,7 @@ status: "processed"
 
 阅读目标：
 
-- 看 trace-log draft 在没有稳定脚本入口时，什么样的真实输入才算一次标准化 case。
+- 看 trace-log 从历史 draft 进入 active 前，什么样的真实输入才算一次标准化 case。
 - 理解为什么“能不能开始记 case”本身也要有门槛，而不是任何排查请求都算。
 
 #### 20. [[trace日志真实案例模板]]
