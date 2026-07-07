@@ -36,11 +36,20 @@ status: "processed"
 
 ### 这批公司我先放哪几家
 
+第一批：
 - [[01-Google DeepMind]]
 - [[02-OpenAI]]
 - [[03-Anthropic]]
 - [[04-Meta AI]]
 - [[05-xAI]]
+
+第二批：
+- [[06-Microsoft AI]]
+- [[07-Mistral]]
+- [[08-Cohere]]
+- [[09-Perplexity]]
+- [[10-Figure AI]]
+- [[11-AI公司对比：模型、Agent、开发者生态、开源、科学AI]]
 
 ### 一个最实用的判断框架
 
@@ -73,6 +82,12 @@ status: "processed"
 - [[03-Anthropic]]
 - [[04-Meta AI]]
 - [[05-xAI]]
+- [[06-Microsoft AI]]
+- [[07-Mistral]]
+- [[08-Cohere]]
+- [[09-Perplexity]]
+- [[10-Figure AI]]
+- [[11-AI公司对比：模型、Agent、开发者生态、开源、科学AI]]
 - [[01-01-LLM-总览]]
 - [[05-agent.md.md]]
 - [[02-context engineering]]
