@@ -1,6 +1,6 @@
 ---
 title: "Anthropic 学习总览"
-source: "ai-related/16-agent-assistant/anthropic 学习/Anthropic 学习总览.md"
+source: "anthropic 学习/Anthropic 学习总览.md"
 author: "笨笨"
 published:
 created: 2026-07-07
