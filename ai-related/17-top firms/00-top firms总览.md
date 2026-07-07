@@ -51,6 +51,13 @@ status: "processed"
 - [[10-Figure AI]]
 - [[11-AI公司对比：模型、Agent、开发者生态、开源、科学AI]]
 
+第三批：
+- [[12-Microsoft Research AI]]
+- [[13-AWS AI]]
+- [[14-NVIDIA AI]]
+- [[15-Runway]]
+- [[16-Character.AI]]
+
 ### 一个最实用的判断框架
 
 | 公司 | 最强印象 | 我最该看什么 |
@@ -88,6 +95,11 @@ status: "processed"
 - [[09-Perplexity]]
 - [[10-Figure AI]]
 - [[11-AI公司对比：模型、Agent、开发者生态、开源、科学AI]]
+- [[12-Microsoft Research AI]]
+- [[13-AWS AI]]
+- [[14-NVIDIA AI]]
+- [[15-Runway]]
+- [[16-Character.AI]]
 - [[01-01-LLM-总览]]
 - [[05-agent.md.md]]
 - [[02-context engineering]]
