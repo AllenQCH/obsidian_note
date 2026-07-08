@@ -5,3 +5,4 @@
 - [Project Deal](03-Project-Deal.md)
 - [Anthropic Economic Index report: Cadences](04-Anthropic-Economic-Index-report-Cadences.md)
 - [What 81,000 people want from AI](05-What-81000-people-want-from-AI.md)
+- [Claude J-space：deliberate vs. automatic processing](06-Claude-J-space-deliberate-vs-automatic-processing.md)

@@ -79,6 +79,7 @@ status: "processed"
 看：
 - Meta AI
 - Mistral
+- 再配合看：[[17-Closed model、Open-weight model、Open-source model 的区别]]
 
 #### 想看未来 Physical AI
 看：
@@ -103,3 +104,4 @@ status: "processed"
 - [[08-Cohere]]
 - [[09-Perplexity]]
 - [[10-Figure AI]]
+- [[17-Closed model、Open-weight model、Open-source model 的区别]]

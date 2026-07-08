@@ -58,6 +58,9 @@ status: "processed"
 - [[15-Runway]]
 - [[16-Character.AI]]
 
+补充理解页：
+- [[17-Closed model、Open-weight model、Open-source model 的区别]]
+
 ### 一个最实用的判断框架
 
 | 公司 | 最强印象 | 我最该看什么 |
@@ -100,6 +103,7 @@ status: "processed"
 - [[14-NVIDIA AI]]
 - [[15-Runway]]
 - [[16-Character.AI]]
+- [[17-Closed model、Open-weight model、Open-source model 的区别]]
 - [[01-01-LLM-总览]]
 - [[05-agent.md.md]]
 - [[02-context engineering]]
