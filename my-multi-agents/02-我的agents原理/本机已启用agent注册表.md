@@ -31,6 +31,15 @@ gate
 
 并且 `~/.codex/config.toml` 已经是唯一配置真源，不再维护 `config.template.toml`。
 
+当前 Agent 清单不再手工同步到多个文件：
+
+- 结构化职责说明：`/Users/heytea/.codex/agents/resource_metadata.json`
+- 统一查询数据：`/Users/heytea/.codex/agent-catalog-runtime/resource_registry.json`
+- 自动生成 Markdown：`/Users/heytea/.codex/agents/docs/agent-registry.md`
+- 自动生成 HTML：`file:///Users/heytea/.codex/agent-catalog-runtime/agent_catalog.html`
+
+本篇 Obsidian 笔记保留架构解释和示例，不再作为 active Agent 数量的真源。查看当前 Agent 数量、职责和边界时，以自动生成的 Markdown 或 HTML 为准。
+
 完整统一流程看：
 
 - [[所有agent四层结构和统一流程]]

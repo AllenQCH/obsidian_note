@@ -44,6 +44,13 @@ status: "processed"
 - `closeout` 不是第五层
 - 它仍然属于 `stage` 层的 `stage_closeout_reporter`
 
+工具能力有两个正式入口：
+
+- `tool_*` operator：完整治理入口，负责稳定输入输出、边界和证据约束
+- operator 登记的底层 skill / script：公共能力入口，任何 Agent 都能直接调用
+
+能委派且需要完整治理时走 operator；无法继续委派或直接调用更合适时走底层能力。两种方式都要保留相同安全边界和调用证据，不能因为无法委派就猜数据库或日志事实。
+
 ### 当前 active agent 一览
 
 #### Control
@@ -222,14 +229,16 @@ tool_obsidian_operator
 ```text
 investigation
 -> stage_investigation_planner
--> 再决定是否调用某个 tool_*
+-> 立即选择最小证据 operator 或其公共 skill
+-> 用真实证据缩小假设
 ```
 
-这里最重要的不是马上执行工具，而是先分清：
+这里最重要的是先确定最小证据目标，然后马上使用已有能力验证：
 
 - 哪些是事实
 - 哪些只是猜测
 - 最小证据集是什么
+- 如果不能继续委派，直接调用对应 skill；工具不可用才标记 `pending/blocked`
 
 ### 6. 如果你要查 trace 或 CLS 日志
 

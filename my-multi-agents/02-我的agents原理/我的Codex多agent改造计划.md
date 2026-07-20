@@ -275,7 +275,7 @@ gate 层只负责 `go / warn / block` 放行判断，不执行具体工具动作
 4. 开发流程里的人工确认默认合并为一次性授权包；迭代开发中分支不再作为常规确认项，而是默认 `fetch origin`、切 `master`、`pull --ff-only origin master`，再按既定规则创建规范需求分支。只有非 `master` 来源分支、分支名无法生成、涉及仓库不明确、远端同名分支新建/复用歧义或分支状态冲突时才人工确认。
 5. 迭代开发默认采用“前置人工控制区 + 后续自主闭环”：路由确认、需求/设计确认需要人工把关；默认路由交付是输出启动命令和完整 prompt，由用户自行开新窗口粘贴，不再单独确认“是否启动独立窗口”。确认后 agent 自主建分支、写代码、写测试规则、跑测试，测试通过后自主 commit/push，并在已要求提测时继续创建 BK 流水线和在线提测文档。若迭代开发改动依赖包候选，依赖包识别同样先按公司项目服务名前缀判断：`api`、`service`、`manager`、`center` 开头默认不是依赖包；非这些前缀的是依赖包候选。候选已在项目 `AGENTS.md` 登记时先 deploy/publish，再触发受影响下游服务流水线；不认识时先确认并写回项目 `AGENTS.md`。测试失败时先自动定位，只有修复方案会改变已确认设计、扩大范围、改变接口契约，或需要接受失败继续推进时，才回到人工确认。
 6. 迭代再开发默认采用“前期续改目标确认 + 后续自主闭环”：先复用已有 OpenSpec、分支、历史提交、测试记录、提测文档和流水线记录，重点确认本次续改目标与是否改变原设计；如果续改会触达交付文档或流水线，必须先恢复原在线 AliDocs 提测文档 URL/nodeId、BK 主需求流水线和受影响服务子流水线映射。确认后 agent 自主改代码、补测试、跑验证，测试通过后 commit/push。默认不新建 BK 流水线；push 后复用原需求流水线，按本次实际改动服务重跑已有服务子流水线。依赖包识别先按公司项目服务名前缀判断：`api`、`service`、`manager`、`center` 开头默认不是依赖包；非这些前缀的是依赖包候选。若候选已在项目 `AGENTS.md` 登记，可直接 deploy/publish 后重跑相关服务流水线；若不认识，先向用户确认，并把确认结果写入项目 `AGENTS.md`。已有提测文档只在涉及服务、设计、接口、前端对接、外部对接、测试范围、风险说明或验证证据变化时更新。在线提测文档按 6 个 sheet 定位更新：`服务清单` 写服务与流水线，`提测配置清单-TEST` 写测试环境 Apollo/配置，`提测配置清单-PROD` 写生产 Apollo/配置，`数据库脚本` 写 DDL/DML，`定时任务 XXL-JOB` 写定时任务，`发布流程` 写发布步骤。
-7. 新增 `codex-downloads/openspec` 统一归档层：`/Users/heytea/Documents/HeyTea/code/codex-downloads/openspec/` 用来做跨项目需求总索引，汇总最近需求、涉及仓库、分支、commit、测试、流水线、提测文档、前端对接和外部对接。它不替代服务级 OpenSpec；服务级 OpenSpec 仍随各服务代码提交。
+7. 新增 `codex-downloads/openspec` 统一归档层：`/Users/heytea/Documents/myHeytea/code/codex-downloads/openspec/` 用来做跨项目需求总索引，汇总最近需求、涉及仓库、分支、commit、测试、流水线、提测文档、前端对接和外部对接。它不替代服务级 OpenSpec；服务级 OpenSpec 仍随各服务代码提交。
 
 8. 当前主配置真源只有 `~/.codex/config.toml`，不要再恢复 `config.template.toml` 双轨维护。
 9. `closeout` 仍然属于 `stage` 层，不单独再造第五层。
@@ -399,7 +399,7 @@ gate 层只负责 `go / warn / block` 放行判断，不执行具体工具动作
   - 默认规则：`center` / repository-facing 层不吸收上层展示 DTO 的属性重命名；展示兼容和字段别名优先放在 `manager` / `backend` / `convert` 层处理
   - 仅当 SQL 条件、返回列、持久化契约或真实下层领域结构本身有问题时，才把改动下推到 `center`
 - 已完成：codex-downloads 统一 OpenSpec 归档层
-  - 已新增 `/Users/heytea/Documents/HeyTea/code/codex-downloads/openspec/README.md`
+  - 已新增 `/Users/heytea/Documents/myHeytea/code/codex-downloads/openspec/README.md`
   - 已新增统一需求索引模板 `templates/demand-index-template.md`
   - 已建立 `active/`、`archived/`、`attachments/` 三类归档目录
   - 已同步 multi-agents 规则：跨仓库需求、前端/外部对接、流水线证据、提测文档和最近工作总览应维护统一索引；服务级 OpenSpec 仍保留在服务仓库内

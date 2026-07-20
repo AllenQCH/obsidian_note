@@ -18,6 +18,7 @@ status: "processed"
 
 ## 核心入口
 
+- [[我的multi-agent模型总览]]
 - [[我的四层模型和Xuetao对比]]
 - [[所有agent四层结构和统一流程]]
 - [[我的Codex多agent改造计划]]
@@ -30,6 +31,7 @@ status: "processed"
 
 - [[什么时候把skill做成agent]]
 - [[开发流程强制门禁改造]]
+- [[需求文件夹方案怎么组织]]
 - [[OpenSpec证据链怎么用]]
 - [[本机资源注册表怎么查]]
 - [[资源注册表总览]]

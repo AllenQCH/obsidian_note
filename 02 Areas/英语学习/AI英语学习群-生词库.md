@@ -28,6 +28,48 @@ status: processed
 
 ## 按日期记录
 
+### 2026-07-09
+
+| 词 / 短语 | 音标 | 中文意思 | 技术语境 / 备注 |
+| --- | --- | --- | --- |
+| penalty | — | 处罚；惩罚 | 用户截图 OCR 整理；可用于 late payment penalty / penalty clause |
+| designate | — | 指派；委任；标明；命名 | 用户截图 OCR 整理；可用于 designate a person / designate an area |
+| ministry | — | （政府）部门；牧师群体；牧职工作 | 用户截图 OCR 整理；常见于 government ministry |
+| retrospective | — | 回顾的；追溯的；回顾展 | 用户截图 OCR 整理；也可用于 sprint retrospective |
+| Argentina | — | 阿根廷 | 用户截图 OCR 整理；国家名 |
+| steak | — | 牛排 | 用户截图 OCR 整理；日常词汇 |
+| blurry | — | 模糊的；不清楚的 | 用户截图 OCR 整理；可用于 blurry photo / blurry memory |
+| fuzzy | — | 模糊的；失真的 | 用户截图 OCR 整理；可用于 fuzzy image / fuzzy logic |
+| mist | — | 薄雾；视线模糊不清 | 用户截图 OCR 整理；日常词汇 |
+| whale | — | 鲸；捕鲸 | 用户截图 OCR 整理；日常词汇 |
+| phonetically | — | 按发音地；语音学上 | 用户截图 OCR 整理；可用于 spell it phonetically |
+| thong | — | 皮带；细带；人字拖 | 用户截图 OCR 整理；日常词汇 |
+| frustration | — | 挫折；挫败；失意 | 用户截图 OCR 整理；可用于 a sense of frustration |
+| fries | — | 炸薯条 | 用户截图 OCR 整理；French fries |
+| vice | — | 恶习；罪恶；副职 | 用户截图 OCR 整理；语义较多，需结合语境 |
+| scooter | — | 小型摩托车；滑板车 | 用户截图 OCR 整理；日常词汇 |
+| bucket | — | 桶；一桶之量 | 用户截图 OCR 整理；也可用于 bucket list / storage bucket |
+| balcony | — | 阳台；楼厅包厢 | 用户截图 OCR 整理；日常词汇 |
+| exaggeration | — | 夸张；夸大 | 用户截图 OCR 整理；可用于 That is an exaggeration. |
+| traumatic | — | 创伤性的 | 用户截图 OCR 整理；可用于 traumatic event |
+| PTSD | — | 创伤后应激障碍 | 用户截图 OCR 整理；post-traumatic stress disorder |
+| scar | — | 疤痕；创伤痕迹 | 用户截图 OCR 整理；也可指心理创伤痕迹 |
+| tattooer | — | 纹身师 | 用户截图 OCR 整理；日常词汇 |
+| tropics | — | 热带地区 | 用户截图 OCR 整理；常见于 the tropics |
+| pivot | — | 枢轴；支点；转向 | 用户截图 OCR 整理；也可用于 business pivot |
+| immigrate | — | 移民；迁入 | 用户截图 OCR 整理；immigrate to + 国家/地区 |
+| deliberate | — | 深思熟虑的；故意的；仔细考虑 | 用户截图 OCR 整理；可用于 deliberate choice / deliberate action |
+| torturing | — | 折磨人的；拷问的 | 用户截图 OCR 整理；可用于 a torturing process |
+| credits | — | 演职员表；学分；信用 | 用户截图 OCR 整理；film credits / course credits |
+| hype | — | 炒作；大肆宣传 | 用户截图 OCR 整理；可用于 media hype / overhype |
+| wacky | — | 古怪的；乖僻的 | 用户截图 OCR 整理；日常词汇 |
+| face | — | 脸；表面；面对 | 用户截图 OCR 整理；高频基础词，可用于 face a problem |
+| faithful | — | 忠实的；如实的 | 用户截图 OCR 整理；faithful friend / faithful reproduction |
+| macintosh | — | 麦金塔电脑；一种苹果 | 用户截图 OCR 整理；总览页识别到的词 |
+| instruction | — | 指令；说明 | 用户截图 OCR 整理；与已有 instructions 区分为单数形式 |
+| fonts | — | 字体 | 用户截图 OCR 整理；UI / design context 常见 |
+| coke | — | 可口可乐；焦炭 | 用户截图 OCR 整理；需结合语境判断具体义项 |
+
 ### 2026-06-29
 
 | 词 / 短语 | 音标 | 中文意思 | 技术语境 / 备注 |

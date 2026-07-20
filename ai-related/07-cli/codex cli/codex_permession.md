@@ -77,7 +77,7 @@ network_access = true
 [sandbox_workspace_write]
 writable_roots = [
   "/Users/heytea/Documents/Obsidian Vault",
-  "/Users/heytea/Documents/HeyTea/code"
+  "/Users/heytea/Documents/myHeytea/code"
 ]
 ```
 

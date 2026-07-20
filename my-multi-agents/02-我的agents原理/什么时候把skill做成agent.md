@@ -20,8 +20,9 @@ status: "processed"
 
 先说结论：
 
-- `skill` 更像“能力入口”或“执行手册”
-- `agent` 更像“在四层体系里占一个明确岗位”
+- `skill` 是所有主 Agent、业务 Agent、子 Agent 都能直接使用的公共能力入口
+- `agent` 是在四层体系里占一个明确岗位的治理包装层
+- skill 包装成 agent 后不会变成 agent 私有能力；是否委派只决定调用形式，不决定能力是否可用
 
 不是所有 skill 都值得 agent 化。
 
@@ -64,6 +65,18 @@ status: "processed"
 所以你可以简单理解成：
 
 > skill 解决“能不能做”，agent 解决“在系统里由谁来做”。
+
+当前运行态支持两个正式入口：
+
+```text
+需要完整路由、输入校验、标准输出和证据治理
+-> 调用 tool_* operator
+
+当前 Agent 无法继续委派，或直接调用更简单
+-> 调用该 operator 登记的底层 skill / script
+```
+
+两种入口遵守相同的安全边界和证据要求。数据库、日志、trace、流水线等外部事实必须来自真实调用；工具不可用时只能标记 `pending/blocked`，不能猜。
 
 ### 当前已经适合 agent 化，并且事实上已经落地的 skill
 
@@ -160,16 +173,13 @@ status: "processed"
 
 #### 2. `trace-log-analysis`
 
-它很有潜力变成 `tool_trace_log_operator`，但现在还差一个条件：
+它已经落地为 active `tool_trace_log_operator`，底层公共能力仍是 `trace-log-analysis`。
 
-- 你本地四层体系里还没有把它真的落成稳定 operator
+因此：
 
-所以目前更准确的状态是：
-
-- 值得 agent 化
-- 但尚未正式落地
-
-也就是说，现在它仍然应该被当成 draft candidate 看，而不是 active tool agent。
+- 完整 trace 证据流程可以走 operator
+- 不能继续委派的 Agent 可以直接使用 `trace-log-analysis`
+- 无论哪种入口，都要还原时间线、找第一异常点，并明确证据缺口
 
 #### 3. `release-workflow`
 
@@ -215,7 +225,7 @@ status: "processed"
 | `dbauto-sql-query` | 已 agent 化 | 只读 SQL 和元数据查询边界清楚，已有稳定脚本 |
 | `excel-json-analysis` | 已 agent 化 | 本地确定性处理，非常适合 tool agent |
 | `obsidian-note-writing` | 暂不单独 agent 化 | 更像 `tool_obsidian_operator` 的规范来源 |
-| `trace-log-analysis` | 值得下一步 agent 化 | investigation 场景需要，但本地还未正式落地 |
+| `trace-log-analysis` | 已 agent 化且保留公共 Skill 入口 | `tool_trace_log_operator` 负责治理，所有 Agent 仍可直接使用底层能力 |
 | `release-workflow` | 先拆，再 agent 化 | 现在太像“大 workflow skill” |
 | `dws` / `lark-*` | 不建议整体 agent 化 | 工具面太宽，应该按具体高频流程拆 |
 
@@ -232,10 +242,10 @@ status: "processed"
 ## 可执行动作
 
 1. 继续保持当前已经落地的 5 个 `tool_*` agent，不要再把它们并回大 skill。
-2. 下一批最值得考虑 agent 化的是 `trace-log-analysis`。
+2. 已 agent 化的能力必须同时登记 Operator 和公共 Skill/脚本入口，不能因委派深度限制而失效。
 3. `release-workflow` 不要急着整体 agent 化，先拆步骤再说。
 4. `dws` / `lark-*` 这类大 skill，优先按高频场景拆，不要整包映射成一个 agent。
-5. 真开始推进 `trace-log-analysis` 时，先按 [[trace日志真实任务怎么记录]] 跑真实 case，再决定要不要晋升 active。
+5. trace/log/dbauto 等外部事实必须保留真实调用证明；不能调用时标记阻塞或待验。
 
 ## 相关链接
 

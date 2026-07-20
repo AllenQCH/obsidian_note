@@ -66,7 +66,7 @@ user request
 -> stage_task_planner 或 stage_investigation_planner
 -> gate_stage_evaluator(gate_design_confirmed)  # 仅改代码任务，硬门禁
 -> stage_execution_runner
--> 一个或多个 tool_* operator
+-> 一个或多个 tool_* operator，或其登记的公共 skill / script
 -> stage_test_runner                         # 代码改动后，测试角色
 -> gate_stage_evaluator(gate_test_passed)    # commit / push / pipeline 前硬门禁
 -> stage_integration_orchestrator
@@ -78,6 +78,8 @@ user request
 - `control` 只判断走哪条路，不做工具动作。
 - `stage` 管阶段目标、证据和推进，不吞掉具体工具逻辑。
 - `tool` 只做一个小的操作能力。
+- Operator 是治理入口，底层 skill / script 是所有 Agent 都能直接使用的公共能力入口。
+- 无法继续委派时直接调用公共能力，不得把能力判为不可用；Gate 检查调用证据，不检查是否额外创建了子 Agent。
 - `gate` 只给 `go / warn / block`，不替代执行。
 - `closeout` 只汇报已验证事实，不补脑不存在的完成状态。
 
