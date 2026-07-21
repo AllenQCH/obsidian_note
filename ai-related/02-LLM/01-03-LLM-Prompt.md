@@ -82,7 +82,7 @@ SQL：SELECT * FROM order WHERE shop_no IN (...)
 ## 相关链接
 
 - [[01-01-LLM-总览]]
-- [[01-04-LLM-Context]]
+- [[01-04-00-LLM-Context]]
 - [[02-01-RAG-总览]]
 - [[Tool]]
 - [[01-prompt engineering]]

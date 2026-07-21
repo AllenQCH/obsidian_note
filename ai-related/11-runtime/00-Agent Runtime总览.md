@@ -447,8 +447,8 @@ Infrastructure
 
 - [[LLM Runtime]]
 - [[AI-runtime]]
-- [[01-04-LLM-Context]]
-- [[01-06-LLM-Memory]]
+- [[01-04-00-LLM-Context]]
+- [[01-06-00-LLM-Memory]]
 - [[Tool]]
 - [[04-loop engineering]]
 - [[03-harness engineering]]

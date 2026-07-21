@@ -36,13 +36,13 @@ Context 是模型当前能看到的输入内容，受上下文窗口限制；Mem
 
 ### AI Memory 的常见分层
 
-| 层级 | 作用 | 常见存储 | 典型内容 |
-|---|---|---|---|
-| Working memory | 当前任务工作区 | Prompt / runtime state | 当前目标、计划、工具结果、临时约束 |
-| Episodic memory | 事件和经历 | 文档库、日志库、向量库 | 某次对话、某次任务执行过程、失败原因 |
-| Semantic memory | 稳定知识 | 向量库、关系数据库、知识图谱 | 用户偏好、项目事实、实体关系 |
-| Procedural memory | 做事方法 | Markdown、规则库、workflow、skill | 操作步骤、工具使用规则、复盘经验 |
-| Meta memory | 记忆管理策略 | 配置、评估记录 | 什么该记、什么不该记、过期策略 |
+| 层级                | 作用      | 常见存储                        | 典型内容               |
+| ----------------- | ------- | --------------------------- | ------------------ |
+| Working memory    | 当前任务工作区 | Prompt / runtime state      | 当前目标、计划、工具结果、临时约束  |
+| Episodic memory   | 事件和经历   | 文档库、日志库、向量库                 | 某次对话、某次任务执行过程、失败原因 |
+| Semantic memory   | 稳定知识    | 向量库、关系数据库、知识图谱              | 用户偏好、项目事实、实体关系     |
+| Procedural memory | 做事方法    | Markdown、规则库、workflow、skill | 操作步骤、工具使用规则、复盘经验   |
+| Meta memory       | 记忆管理策略  | 配置、评估记录                     | 什么该记、什么不该记、过期策略    |
 
 ### 为什么 Agent 需要 Memory
 
@@ -227,8 +227,8 @@ Context 是模型当前能看到的输入内容，受上下文窗口限制；Mem
 
 ## 相关链接
 
-- [[01-06-LLM-Memory]]
-- [[01-04-LLM-Context]]
+- [[01-06-00-LLM-Memory]]
+- [[01-04-00-LLM-Context]]
 - [[02-02-RAG-Retrieval召回与混合检索]]
 - [[04-RAG-高级模式]]
 - [[05-agent.md]]

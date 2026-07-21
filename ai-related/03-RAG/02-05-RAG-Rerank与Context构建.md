@@ -76,7 +76,7 @@ Reranker 通常会重新评估：
 ## 相关链接
 
 - [[02-01-RAG-总览]]
-- [[01-04-LLM-Context]]
+- [[01-04-00-LLM-Context]]
 - [[02-02-RAG-Retrieval召回与混合检索]]
 - [[02-01-RAG-Embedding向量化]]
 - [[01-03-LLM-Prompt]]

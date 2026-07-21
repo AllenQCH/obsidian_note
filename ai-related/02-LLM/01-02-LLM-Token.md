@@ -55,5 +55,5 @@ Token 是 LLM 理解和生成文本的基本单位。
 ## 相关链接
 
 - [[01-01-LLM-总览]]
-- [[01-04-LLM-Context]]
+- [[01-04-00-LLM-Context]]
 - [[01-03-LLM-Prompt]]
