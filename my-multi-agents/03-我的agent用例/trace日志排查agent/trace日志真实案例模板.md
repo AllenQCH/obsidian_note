@@ -4,7 +4,7 @@ source: "conversation: Codex chat 2026-06-07"
 author: "Codex"
 published:
 created: 2026-06-07
-description: "为后续真实 traceId 排查任务准备统一记录模板，用来积累 tool_trace_log_operator 的激活证据。"
+description: "为后续真实 traceId 排查任务准备统一记录模板，用来积累 tool_trace_log_agent 的激活证据。"
 tags: ["codex", "agent", "workflow", "trace", "investigation", "template"]
 type: "workflow"
 status: "processed"
@@ -24,7 +24,7 @@ status: "processed"
 
 - 让每次真实 trace 排查都按同一格式沉淀
 - 让你后面判断 contract 是否稳定、gate 是否能消费，不再靠回忆
-- 让 `tool_trace_log_operator` 的 draft 晋升条件有真实证据支撑
+- 让 `tool_trace_log_agent` 的 draft 晋升条件有真实证据支撑
 
 ## 核心内容
 
@@ -90,7 +90,7 @@ status: "processed"
 
 这里专门判断：
 
-> 如果把这次结果交给 `gate_stage_evaluator(gate_investigation_ready)`，它能不能自然得出 `go / warn / block`？
+> 如果把这次结果交给 `gate_stage_evaluator_agent(gate_investigation_ready)`，它能不能自然得出 `go / warn / block`？
 
 记录：
 
@@ -99,8 +99,8 @@ status: "processed"
   - `warn`
   - `block`
 - 为什么是这个结果：
-- 是否足以交给 `stage_task_planner`：
-- 是否足以交给 `stage_closeout_reporter`：
+- 是否足以交给 `control_stage_orchestrator_agent`：
+- 是否足以交给 `stage_version_delivery_agent`：
 
 #### 6. 边界检查
 
@@ -165,13 +165,13 @@ status: "processed"
 
 1. 后面每次真实 trace 排查都尽量按这篇模板沉淀。
 2. 连续几次案例后，回看哪些字段稳定，哪些字段总在变。
-3. 只有当这份模板记录出来的案例已经足够稳定时，再考虑真正激活 `tool_trace_log_operator`。
+3. 只有当这份模板记录出来的案例已经足够稳定时，再考虑真正激活 `tool_trace_log_agent`。
 
 ## 相关链接
 
 - [[trace日志agent什么时候能启用]]
 - [[trace日志agent怎么拆]]
 - [[trace日志agent输入输出约定]]
-- [[哪些agent已启用哪些还只是草稿]]
+- [[目标agent落地状态]]
 - [[trace日志agent是做什么的]]
 - [[问题排查先查什么证据]]

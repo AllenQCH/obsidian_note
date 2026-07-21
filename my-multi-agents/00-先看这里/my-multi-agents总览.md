@@ -4,7 +4,7 @@ source: "my-multi-agents/00-先看这里/my-multi-agents总览.md"
 author: "Codex"
 published:
 created: 2026-07-05
-description: "个人 multi-agents 体系总入口，按 Xuetao 原型、我的 agents 原理、我的 agent 用例三段组织。"
+description: "个人 multi-agent 目标架构与研究资料的总入口。"
 tags: ["codex", "agent", "workflow", "index"]
 type: "workflow"
 status: "processed"
@@ -14,36 +14,30 @@ status: "processed"
 
 ## 摘要
 
-这个目录现在按阅读顺序分成三块。当前运行态入口先看 [[最新multi-agent流程总览]]，旧的计划和样板只当背景材料。
+这里记录的是个人 Codex multi-agent 的**目标架构**，不是当前运行态清单。目标模型包含五类 Agent：`control`、`workflow`、`stage`、`tool`、`gate`；所有本地 Agent 都用 `<layer>_<responsibility>_agent` 命名。
 
-1. 先看 [[最新multi-agent流程总览]]：理解当前 active runtime 怎么跑。
-2. 再看 [[我的agents原理总览]]：理解四层结构、运行态和路由规则。
-3. 最后看 [[我的agent用例总览]]：看 trace、Obsidian、排查等具体 agent 用例。
+是否已经运行，必须以 `~/.codex/config.toml` 和对应 TOML 文件为准，不能以本目录的设计文档为准。
 
-## 推荐阅读顺序
+## 最短阅读路径
 
 1. [[最新multi-agent流程总览]]
-2. [[所有agent四层结构和统一流程]]
-3. [[本机已启用agent注册表]]
-4. [[已启用agent怎么用]]
-5. [[用户说法对应哪个agent]]
-6. [[开发流程强制门禁改造]]
-7. [[资源注册表总览]]
-8. [[trace日志排查总览]]
-9. [[Xuetao多agent体系总结]]
+2. [[所有agent五层结构和统一流程]]
+3. [[目标agent注册表]]
+4. [[用户说法对应哪个agent]]
+5. [[开发流程强制门禁改造]]
 
 ## 内容分区
 
-| 目录 | 做什么 | 先看 |
+| 目录 | 内容 | 入口 |
 | --- | --- | --- |
-| [[最新multi-agent流程总览]] | 当前 active runtime 的主入口 | [[最新multi-agent流程总览]] |
-| [[Xuetao agent原型总览]] | 介绍 Xuetao 的 agent 体系和分层原型 | [[Xuetao多agent体系总结]] |
-| [[我的agents原理总览]] | 介绍我的四层结构、运行态注册、路由和边界 | [[所有agent四层结构和统一流程]] |
-| [[我的agent用例总览]] | 放具体 agent 用例和专题，比如 trace 排查 | [[trace日志排查总览]] |
+| `00-先看这里` | 当前确认的目标设计、范围和下一步 | [[最新multi-agent流程总览]] |
+| `01-Xuetao-agent原型` | 外部原型的原始事实和可迁移原则 | [[Xuetao agent原型总览]] |
+| `02-我的agents原理` | 本地五层模型、职责、命名和证据边界 | [[我的agents原理总览]] |
+| `03-我的agent用例` | 具体任务如何进入五层链路 | [[我的agent用例总览]] |
 
-## 维护入口
+## 当前边界
 
-- [[阅读顺序-先Xuetao再我的agents]]
-- [[已落地能力总清单]]
-- [[当前阶段和下一步]]
-- [[资源注册表总览]]
+- 这轮只确认架构与文档，不代表已完成运行时注册。
+- 暂不增加独立 subflow；需要时由 Workflow Agent 编排 Stage Agent。
+- Skill、MCP、Script 是能力，不与 Agent 混用命名。
+- 运行时迁移时再逐项核对 TOML、注册表、引用和验证脚本。

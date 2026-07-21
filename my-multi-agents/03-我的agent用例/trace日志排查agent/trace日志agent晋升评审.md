@@ -40,13 +40,13 @@ status: "processed"
 
 1. 已经有至少 3 个真实 trace 排查 case
 2. 这些 case 都尽量按现有模板沉淀
-3. 你现在真的要判断 `tool_trace_log_operator` 能不能写进 `config.toml`
+3. 你现在真的要判断 `tool_trace_log_agent` 能不能写进 `config.toml`
 
 ### 评审前先准备什么
 
 建议先把这些材料放一起看：
 
-- `tool_trace_log_operator.draft.toml`
+- `tool_trace_log_agent.draft.toml`
 - workflow 草案
 - 最小执行入口草案
 - 真实案例模板
@@ -90,7 +90,7 @@ status: "processed"
 
 这里看的是：
 
-- `gate_stage_evaluator` 能不能比较自然地吃下结果
+- `gate_stage_evaluator_agent` 能不能比较自然地吃下结果
 - 是不是能稳定得出 `go / warn / block`
 - 要不要每次都靠额外大段人工解释
 

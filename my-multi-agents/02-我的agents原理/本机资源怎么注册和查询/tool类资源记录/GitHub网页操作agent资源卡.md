@@ -1,51 +1,41 @@
 ---
 title: "GitHub网页操作agent资源卡"
-source: "/Users/heytea/.codex/agents/operator/tool_github_web_operator.toml"
+source: "my-multi-agents/02-我的agents原理/本机资源怎么注册和查询/tool类资源记录/GitHub网页操作agent资源卡.md"
 author: "Codex"
-created: 2026-07-01
-description: "通过 opencli 复用本机 GitHub 浏览器登录态，处理仓库设置、可见性调整和需要 Confirm access 的 GitHub Web 操作。"
-tags: ["codex", "tool", "github", "浏览器", "仓库设置", "权限确认", "obsidian"]
-type: "resource"
-status: "active"
+published:
+created: 2026-07-20
+description: "GitHub 网页操作能力的目标 Tool Agent 职责卡，不声明当前运行时 ID。"
+tags: ["codex", "agent", "tool", "github", "browser"]
+type: "reference"
+status: "processed"
 ---
 
 # GitHub网页操作agent资源卡
 
-## 用途
+## 摘要
 
-这个 tool agent 用来处理 GitHub Web 侧操作，尤其是下面几类情况：
+目标命名为 `tool_github_web_agent`，用于必须依赖现有浏览器登录态的 GitHub 网页查询或设置操作。当前是否已按该 ID 注册，必须通过 [[本机资源注册表怎么查]] 核对。
 
-- `gh auth status` 没有登录
-- 本机浏览器已经登录 GitHub，适合直接复用
-- GitHub 要求 `Confirm access`
-- 需要改仓库设置，例如可见性、权限、规则、协作者等
+## 职责
 
-## 主要实现
+- 复用允许的浏览器登录态打开、查询和操作 GitHub 页面。
+- 在写操作前区分只读检查、可逆修改和不可逆提交。
+- 返回页面、仓库、动作、结果和可复现证据。
+- 不提取、转换或回显浏览器 token。
+- CLI 未登录不等于浏览器能力不可用。
 
-- `~/.hermes/node/bin/opencli`
-- `~/.codex/skills/opencli-browser-reuse/scripts/opencli_reuse.sh`
-- `~/Documents/personal_migratory_agents/codex/agents/docs/github-web-operations-workflow-example.md`
+## 输入
 
-## 默认规则
+- 仓库或页面 URL。
+- 期望动作与成功条件。
+- 是否允许外部写入。
+- 需要保留的证据。
 
-1. 先检查 `gh auth status`
-2. 如果 `gh` 已登录且动作完全支持，可直接走 `gh`
-3. 如果 `gh` 未登录，或 GitHub 进入 Web 二次确认，改走 `opencli`
-4. 统一复用稳定 session：`opencli-explore`
-5. 遇到密码、2FA、passkey、设备确认时必须停下并明确提示用户
-6. 用户回复“好了”后再继续
-7. 只有看到最终页面状态变化，才能声明成功
+## 输出
 
-## 标签
+- 实际访问页面。
+- 已执行或仅计划的动作。
+- 页面确认结果。
+- 阻塞原因和下一步。
 
-- GitHub
-- 浏览器
-- 仓库设置
-- 权限确认
-- opencli
-
-## 相关文件
-
-- `~/.codex/agents/operator/tool_github_web_operator.toml`
-- `~/Documents/personal_migratory_agents/docs/github-web-operator-agent-prompt.md`
-- `~/Documents/personal_migratory_agents/codex/agents/docs/github-web-operations-workflow-example.md`
+Skill、浏览器工具和脚本仍是底层能力；本卡只定义 Tool Agent 的治理职责。

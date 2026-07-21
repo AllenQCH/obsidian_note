@@ -4,7 +4,7 @@ source: "conversation: Codex chat 2026-06-07"
 author: "Codex"
 published:
 created: 2026-06-07
-description: "基于现有 trace-log-analysis skill，整理一个未来可落地的 tool_trace_log_operator 候选拆分草案。"
+description: "基于现有 trace-log-analysis skill，整理一个未来可落地的 tool_trace_log_agent 候选拆分草案。"
 tags: ["codex", "agent", "skill", "workflow", "trace", "investigation"]
 type: "workflow"
 status: "processed"
@@ -14,7 +14,7 @@ status: "processed"
 
 ## 摘要
 
-这篇笔记不是在说“现在已经有 `tool_trace_log_operator` 了”。
+这篇笔记不是在说“现在已经有 `tool_trace_log_agent` 了”。
 
 它要解决的问题是：
 
@@ -23,8 +23,8 @@ status: "processed"
 当前结论很明确：
 
 - `trace-log-analysis` 很值得 agent 化
-- 但现在还没正式落地成你本地 `~/.codex` 的一个 `tool_*` agent
-- 所以最合理的下一步不是直接上手乱写 TOML，而是先把边界、输入输出和在四层体系里的位置写清楚
+- 但现在还没正式落地成你本地 `~/.codex` 的一个 `tool_*_agent` agent
+- 所以最合理的下一步不是直接上手乱写 TOML，而是先把边界、输入输出和在五类体系里的位置写清楚
 
 ## 核心内容
 
@@ -52,9 +52,9 @@ status: "processed"
 - 传播噪音
 - 下一步建议
 
-这已经很接近一个标准 `tool_*` agent 的形态了。
+这已经很接近一个标准 `tool_*_agent` agent 的形态了。
 
-### 它在四层模型里应该放哪
+### 它在五类模型里应该放哪
 
 它应该放在：
 
@@ -65,7 +65,7 @@ tool 层
 也就是未来的名字应该更像：
 
 ```text
-tool_trace_log_operator
+tool_trace_log_agent
 ```
 
 而不是：
@@ -81,7 +81,7 @@ tool_trace_log_operator
 
 ### 它未来最合理的职责边界
 
-未来如果真的落成 `tool_trace_log_operator`，它最合理的职责应该是：
+未来如果真的落成 `tool_trace_log_agent`，它最合理的职责应该是：
 
 1. 按 `traceId` 或原始日志输入重建时间线
 2. 标出第一异常点
@@ -108,31 +108,31 @@ tool_trace_log_operator
 未来最自然的链路应该是：
 
 ```text
-control_request_router
--> stage_investigation_planner
--> control_stage_orchestrator(stage=investigation)
--> tool_trace_log_operator
--> gate_stage_evaluator(gate_investigation_ready)
--> stage_task_planner or stage_closeout_reporter
+control_request_router_agent
+-> stage_investigation_planner_agent
+-> control_stage_orchestrator_agent(stage=investigation)
+-> tool_trace_log_agent
+-> gate_stage_evaluator_agent(gate_investigation_ready)
+-> control_stage_orchestrator_agent or stage_version_delivery_agent
 ```
 
 如果 investigation 同时需要多类证据，也可以是：
 
 ```text
-control_request_router
--> stage_investigation_planner
--> control_stage_orchestrator(stage=investigation)
--> tool_trace_log_operator
--> tool_dbauto_operator
--> gate_stage_evaluator(gate_investigation_ready)
--> stage_task_planner or stage_closeout_reporter
+control_request_router_agent
+-> stage_investigation_planner_agent
+-> control_stage_orchestrator_agent(stage=investigation)
+-> tool_trace_log_agent
+-> tool_dbauto_agent
+-> gate_stage_evaluator_agent(gate_investigation_ready)
+-> control_stage_orchestrator_agent or stage_version_delivery_agent
 ```
 
 这条链最关键的地方是：
 
-- `stage_investigation_planner` 决定“先查什么证据”
-- `tool_trace_log_operator` 只负责把日志证据整理出来
-- `gate_stage_evaluator` 判断“当前证据够不够”
+- `stage_investigation_planner_agent` 决定“先查什么证据”
+- `tool_trace_log_agent` 只负责把日志证据整理出来
+- `gate_stage_evaluator_agent` 判断“当前证据够不够”
 
 ### 它未来最适合的输入输出契约
 
@@ -170,7 +170,7 @@ control_request_router
 - `dbauto-export-agent -> run_dbauto_export_agent.sh`
 - `excel-json-analysis -> extract_json_fields_from_excel.py`
 
-所以如果现在直接强行写 `tool_trace_log_operator.toml`，很容易出现：
+所以如果现在直接强行写 `tool_trace_log_agent.toml`，很容易出现：
 
 - 名字先有了
 - 但真实执行入口还不稳
@@ -187,14 +187,14 @@ control_request_router
 
 1. 先用这篇样板继续观察几轮真实 investigation 任务
 2. 看 `trace-log-analysis` 到底是最常用证据工具，还是只在部分场景命中
-3. 再决定它是不是下一批最优先落地的 `tool_*`
+3. 再决定它是不是下一批最优先落地的 `tool_*_agent`
 
 ### 真要落地时，建议按这个顺序推进
 
-1. 先补一版 `tool_trace_log_operator` 的 contract 草案
+1. 先补一版 `tool_trace_log_agent` 的 contract 草案
 2. 再补一版 trace investigation workflow example
 3. 再决定它的真实执行入口到底是什么
-4. 最后才落 `tool_trace_log_operator.toml`
+4. 最后才落 `tool_trace_log_agent.toml`
 5. 落完以后再补进 `config.toml`、registry、reading guide
 
 这个顺序很重要，因为它能避免：
@@ -209,7 +209,7 @@ control_request_router
 - `trace-log-analysis` 是目前最值得继续 agent 化的 skill 候选
 - 但现在更适合先作为“候选拆分草案”，而不是立即注册进 `config.toml`
 
-这和前面那几个已经落地的 `tool_*` 不同：
+这和前面那几个已经落地的 `tool_*_agent` 不同：
 
 - 它的“该不该做”已经很清楚
 - 它的“现在是不是马上实现”还需要再收一层证据

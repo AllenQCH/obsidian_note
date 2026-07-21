@@ -94,8 +94,8 @@ status: "processed"
 - 为什么是这个结果：
   - 第一异常点已经足够明确，能指导下一步继续排查
   - 但最终根因还没被完整证实，因为下游依赖证据还缺
-- 是否足以交给 `stage_task_planner`：`true`
-- 是否足以交给 `stage_closeout_reporter`：`true`
+- 是否足以交给 `control_stage_orchestrator_agent`：`true`
+- 是否足以交给 `stage_version_delivery_agent`：`true`
 
 #### 6. 边界检查
 

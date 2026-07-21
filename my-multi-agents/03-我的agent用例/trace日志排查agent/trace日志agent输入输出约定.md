@@ -4,7 +4,7 @@ source: "conversation: Codex chat 2026-06-07"
 author: "Codex"
 published:
 created: 2026-06-07
-description: "为未来可能落地的 tool_trace_log_operator 整理字段级 contract 草案，便于后续真正实现 TOML 和 workflow。"
+description: "为未来可能落地的 tool_trace_log_agent 整理字段级 contract 草案，便于后续真正实现 TOML 和 workflow。"
 tags: ["codex", "agent", "contract", "trace", "investigation"]
 type: "workflow"
 status: "processed"
@@ -16,9 +16,9 @@ status: "processed"
 
 这篇笔记的目标非常单一：
 
-> 如果你后面真的要实现 `tool_trace_log_operator`，它的输入输出字段应该长什么样？
+> 如果你后面真的要实现 `tool_trace_log_agent`，它的输入输出字段应该长什么样？
 
-前面的 [11-tool_trace_log_operator候选拆分草案](./11-tool_trace_log_operator候选拆分草案.md) 已经把“为什么值得做”和“应该放在哪一层”讲清楚了。
+前面的 [[trace日志agent怎么拆]] 已经把“为什么值得做”和“应该放在哪一层”讲清楚了。
 
 这篇往前再走一步，只做字段级 contract 草案。
 
@@ -32,7 +32,7 @@ status: "processed"
 
 ```json
 {
-  "agent": "tool_trace_log_operator",
+  "agent": "tool_trace_log_agent",
   "input": {},
   "output": {
     "facts": [],
@@ -48,7 +48,7 @@ status: "processed"
 
 - 不要自己发明一套完全不同的返回格式
 - 不要把自然语言长文塞进顶层结构
-- 先保持和你现在 `tool_*` agent 的 contract 风格一致
+- 先保持和你现在 `tool_*_agent` agent 的 contract 风格一致
 
 ### 建议输入字段
 
@@ -179,7 +179,7 @@ status: "processed"
 
 ```json
 {
-  "agent": "tool_trace_log_operator",
+  "agent": "tool_trace_log_agent",
   "input": {
     "trace_id": "abc123",
     "env": "intl",
@@ -230,9 +230,9 @@ status: "processed"
 
 ## 可执行动作
 
-1. 未来真正实现 `tool_trace_log_operator` 时，优先复用这份 contract 草案。
+1. 未来真正实现 `tool_trace_log_agent` 时，优先复用这份 contract 草案。
 2. 如果后面真实 trace 排查任务暴露出新字段，再回头增补，而不是现在过度设计。
-3. 真要落地前，可以把这篇和 [11-tool_trace_log_operator候选拆分草案](/Users/heytea/Documents/obsidian_note/my-multi-agents/02-我的agents原理/trace日志排查agent/trace日志agent怎么拆.md:1) 一起看。
+3. 真要落地前，可以把这篇和 [[trace日志agent怎么拆]] 一起看。
 4. 真要决定是否可以写进运行态前，再对照 [[trace日志agent什么时候能启用]] 逐条确认。
 
 ## 相关链接

@@ -1,11 +1,11 @@
 ---
 title: "最新multi-agent流程总览"
-source: "/Users/heytea/.codex/config.toml; /Users/heytea/.codex/agents/docs/four-layer-runtime-map.md; /Users/heytea/.codex/agents/docs/agent-workflows.md"
+source: "conversation: Codex chat 2026-07-20"
 author: "Codex"
 published:
-created: 2026-07-07
-description: "按当前已注册运行态重新整理个人 Codex multi-agent 的四层流程、硬门禁、路由组和收口规则。"
-tags: ["codex", "agent", "workflow", "registry", "overview"]
+created: 2026-07-20
+description: "当前确认的五类 Agent、四个 Workflow Agent 和开发职责 Agent 总流程。"
+tags: ["codex", "agent", "workflow", "architecture", "overview"]
 type: "workflow"
 status: "processed"
 ---
@@ -14,206 +14,65 @@ status: "processed"
 
 ## 摘要
 
-这篇是当前版本的总入口，只按已经落地的运行态说话。
-
-当前结论：
-
-- `~/.codex/config.toml` 是唯一 active 真源。
-- 已启用 26 个 agent：`control` 2 个，`stage` 6 个，`tool` 17 个，`gate` 1 个。
-- 统一模型仍然是四层：`control -> stage -> tool -> gate`。
-- 开发类任务已经加上两道硬门禁：改代码前必须过 `gate_design_confirmed`，commit / push / pipeline 前必须过 `gate_test_passed`。
-- 后续不需要继续抽象设计，优先拿真实任务验证和补具体工具线。
-
-一句话版本：
+当前目标架构不是一条固定的五类直线，而是五类 Agent 的协作模型：
 
 ```text
-先路由，再规划；先确认，再执行；先测试，再提交；最后只汇报有证据的状态。
+control -> workflow -> stage -> tool
+                    -> gate
 ```
 
-## 核心内容
+其中 Router 只选择 Workflow，Orchestrator 负责执行 Workflow 的状态机，Stage Agent 对阶段结果负责，Tool Agent 提供受治理的原子能力，Gate Agent 只判断能否进入下一阶段。
 
-### 1. 当前运行态真源
-
-判断一个 agent 是否真的启用，只看：
+所有本地 Agent 统一使用：
 
 ```text
-/Users/heytea/.codex/config.toml
+<layer>_<responsibility>_agent
 ```
 
-不算 active 的东西：
+## 总流程
 
-- Obsidian 草案
-- `.draft.*` 文件
-- workflow / harness 文档
-- OpenSpec 或 prompt 模板
-
-所以用户说“做成 agent / 整理成 agent / 新增 agent”时，默认交付不是写一篇说明，而是：
-
-```text
-~/.codex/agents/<layer>/<agent>.toml
-+ ~/.codex/config.toml 里的 [agents.<name>] 注册项
-+ ~/.codex/agents/docs/agent-registry.md 更新
+```mermaid
+flowchart LR
+    U["用户请求"] --> R["control_request_router_agent"]
+    R --> W["workflow_*_agent"]
+    W --> O["control_stage_orchestrator_agent"]
+    O --> S["stage_*_agent"]
+    S --> T["tool_*_agent 或公共 Skill / MCP / Script"]
+    S --> G["gate_stage_evaluator_agent"]
+    G -->|go| O
+    G -->|warn| O
+    G -->|block| S
 ```
 
-### 2. 最新统一流程
+## 四个 Workflow Agent
 
-当前所有 active agent 都收敛到这条链：
-
-```text
-user request
--> control_request_router
--> control_stage_orchestrator
--> stage_task_planner 或 stage_investigation_planner
--> gate_stage_evaluator(gate_design_confirmed)  # 仅改代码任务，硬门禁
--> stage_execution_runner
--> 一个或多个 tool_* operator，或其登记的公共 skill / script
--> stage_test_runner                         # 代码改动后，测试角色
--> gate_stage_evaluator(gate_test_passed)    # commit / push / pipeline 前硬门禁
--> stage_integration_orchestrator
--> stage_closeout_reporter
-```
-
-这条链的关键点：
-
-- `control` 只判断走哪条路，不做工具动作。
-- `stage` 管阶段目标、证据和推进，不吞掉具体工具逻辑。
-- `tool` 只做一个小的操作能力。
-- Operator 是治理入口，底层 skill / script 是所有 Agent 都能直接使用的公共能力入口。
-- 无法继续委派时直接调用公共能力，不得把能力判为不可用；Gate 检查调用证据，不检查是否额外创建了子 Agent。
-- `gate` 只给 `go / warn / block`，不替代执行。
-- `closeout` 只汇报已验证事实，不补脑不存在的完成状态。
-
-### 3. 四层 agent 清单
-
-#### Control
-
-| agent | 作用 |
-| --- | --- |
-| `control_request_router` | 判断任务类型、缺失输入和候选链路 |
-| `control_stage_orchestrator` | 维护当前阶段，选择下一批 stage / tool / gate |
-
-#### Stage
-
-| agent | 作用 |
-| --- | --- |
-| `stage_task_planner` | 已知目标任务的输入、输出、工具链规划 |
-| `stage_investigation_planner` | 原因不明任务的最小证据集和假设拆分 |
-| `stage_execution_runner` | 按已选链路执行，记录事实；改代码不自行 commit / push |
-| `stage_test_runner` | 代码改动后的测试角色，负责测试设计、执行和 pass / fail |
-| `stage_integration_orchestrator` | 汇总多工具、多产物、多仓库结果 |
-| `stage_closeout_reporter` | 最终收口，汇报证据、路径、链接和剩余风险 |
-
-#### Tool
-
-| agent | 作用 |
-| --- | --- |
-| `tool_sso_operator` | 检查或准备 HeyTea SSO |
-| `tool_dbauto_operator` | 准备 dbauto 导出运行环境 |
-| `tool_dbauto_sql_operator` | 国内 dbauto 只读 SQL / 元数据查询 |
-| `tool_excel_operator` | Excel / CSV 提取、去重、生成文件 |
-| `tool_obsidian_operator` | 本地 Obsidian 笔记写入、移动、整理 |
-| `tool_github_sync_operator` | Obsidian 改完后的 GitHub 同步 |
-| `tool_github_web_operator` | GitHub 网页设置和浏览器确认类动作 |
-| `tool_trace_log_operator` | traceId 时间线和第一异常点整理 |
-| `tool_cls_log_query_operator` | 腾讯云 CLS 日志查询和第一错误证据提取 |
-| `tool_xxljob_execute_once_operator` | 固定发票 XXL-Job `jobId=280` 执行一次 |
-| `tool_weekly_report_operator` | 蓝鲸周报只读查询和格式化 |
-| `tool_gmail_classifier_operator` | Gmail Inbox label 分类 |
-| `tool_personal_migration_curator` | 个人 agent / skill 可迁移资源整理 |
-| `tool_invoice_application_full_flow_delete_operator` | 发票申请单全链路删除包生成 |
-| `tool_auth_permission_seed_operator` | HSP 权限种子 SQL 和无权限链路诊断 |
-| `tool_intl_pof_sh_confirm_operator` | 海外 POF 收货单满数量确认 curl 包准备 |
-| `tool_bk_pipeline_operator` | 蓝鲸需求流水线和服务子流水线操作 |
-
-#### Gate
-
-| agent | 作用 |
-| --- | --- |
-| `gate_stage_evaluator` | 统一按规则输出 `go / warn / block` |
-
-### 4. 任务怎么路由
-
-controller 先看任务形状，不按关键词硬套工具。
-
-| 用户想做什么 | 任务形状 | 主要链路 |
+| Agent | 适用场景 | 顺序约束 |
 | --- | --- | --- |
-| 启动或检查 dbauto 导出环境 | `dbauto_export` | `tool_sso_operator -> tool_dbauto_operator` |
-| 查库表、表结构、只读 SQL | `dbauto_readonly_sql` | `tool_sso_operator -> tool_dbauto_sql_operator` |
-| 查 trace / CLS / message | `log_investigation` | `tool_cls_log_query_operator -> tool_trace_log_operator` |
-| 处理 Excel / CSV | `local_file_processing` | `tool_excel_operator` |
-| 写 Obsidian / 同步 GitHub | `obsidian_knowledge_work` | `tool_obsidian_operator -> tool_github_sync_operator` |
-| 创建、打开、重跑蓝鲸流水线 | `release_pipeline` | `tool_sso_operator -> tool_bk_pipeline_operator` |
-| 执行一次 XXL-Job | `scheduled_ops` | `tool_sso_operator -> tool_xxljob_execute_once_operator` |
-| 查周报 | `weekly_report` | `tool_sso_operator -> tool_weekly_report_operator` |
-| 整理 Gmail 分类 | `gmail_ops` | `tool_gmail_classifier_operator` |
-| 操作 GitHub 网页 | `github_web_ops` | `tool_github_web_operator` |
-| 权限种子 SQL / 无权限排查 | `permission_ops` | `tool_dbauto_sql_operator -> tool_auth_permission_seed_operator` |
-| 发票申请单删除包 | `invoice_dml_package` | `tool_dbauto_sql_operator -> tool_invoice_application_full_flow_delete_operator` |
-| 海外 POF 收货确认准备 | `intl_pof_receipt_confirm` | `tool_dbauto_operator -> tool_intl_pof_sh_confirm_operator` |
-| 个人 agent / skill 迁移整理 | `personal_framework_migration` | `tool_personal_migration_curator` |
+| `workflow_iterative_feature_development_agent` | 常规迭代开发，包括项目初始版本 | 严格 |
+| `workflow_rewrite_iterative_feature_development_agent` | 基于历史实现继续改造或重做现有迭代 | 严格 |
+| `workflow_bug_investigation_agent` | 先取证、定位根因，再决定是否修复 | 严格 |
+| `workflow_solve_personal_problem_agent` | 本地配置、知识维护、浏览器操作、个人自动化等 | 按任务动态编排 |
 
-### 5. 开发类任务的新流程
+## 开发职责 Stage Agent
 
-开发类任务包括：
+| Agent | 核心交付物 |
+| --- | --- |
+| `stage_product_owner_agent` | 清晰、可验收的需求范围与闭环问题 |
+| `stage_backend_designer_agent` | 后端改动点、接口和数据设计、风险与回归面 |
+| `stage_backend_developer_agent` | 后端实现、单元测试和可复现验证结果 |
+| `stage_frontend_developer_agent` | 按确认文案、交互和接口契约实现前端 |
+| `stage_test_case_designer_agent` | 独立测试用例、数据准备和回归逻辑 |
+| `stage_code_reviewer_agent` | 独立 CR 结论、问题清单和剩余风险 |
+| `stage_test_runner_agent` | 本地服务/Docker/跨服务联调、正式测试证据 |
+| `stage_version_delivery_agent` | 权限、依赖、部署、流水线、观察和归档闭环 |
 
-- `new_feature_from_scratch`，中文叫 `新项目开发`
-- `iterative_feature_development`，中文叫 `迭代开发`
-- `existing_feature_continuation`，中文叫 `迭代再开发`
-- 任务中途发现需要改代码的 bug fix
+Bug 排查流程可使用 `stage_investigation_planner_agent`，但它不属于上述开发职责清单。
 
-默认流程：
+## 关键规则
 
-```text
-路由 / 分类
--> 需求、影响面、证据分析
--> 设计或修复方案确认
--> gate_design_confirmed  # 人工硬确认
--> 建分支 / 复用分支
--> 实现
--> stage_test_runner 设计并执行测试
--> gate_test_passed       # 测试通过硬门禁
--> commit / push
--> 需要提测或流水线时再进入 BK / AliDocs / OpenSpec 收口
--> closeout
-```
-
-这里的懒人原则是：确认点前置，后面自动跑完；但任何代码改动都不能跳过设计确认和测试通过。
-
-### 6. 三个最容易混淆的边界
-
-#### dbauto 导出环境和只读 SQL 不是一个工具
-
-```text
-导出环境 ready -> tool_dbauto_operator
-查库表 / 表结构 / 只读 SQL -> tool_dbauto_sql_operator
-```
-
-#### 写 Obsidian 和同步 GitHub 是两步
-
-```text
-本地写入 -> tool_obsidian_operator
-同步 GitHub -> gate_obsidian_sync_ready -> tool_github_sync_operator
-```
-
-#### CLS 日志行和 trace 根因整理不是一件事
-
-```text
-查可见日志行 -> tool_cls_log_query_operator
-整理 trace 时间线和第一异常点 -> tool_trace_log_operator
-```
-
-## 可执行动作
-
-1. 想快速回忆当前体系，先看这篇，再看 [[本机已启用agent注册表]]。
-2. 真正执行任务时，用 [[用户说法对应哪个agent]] 做自然语言到链路的速查。
-3. 如果是开发类任务，必须同时看 [[开发流程强制门禁改造]]。
-4. 后续新增 agent 时，只更新运行态注册表和对应 Obsidian 入口，不再新增大而全的抽象说明。
-
-## 相关链接
-
-- [[本机已启用agent注册表]]
-- [[所有agent四层结构和统一流程]]
-- [[已启用agent怎么用]]
-- [[用户说法对应哪个agent]]
-- [[开发流程强制门禁改造]]
-- [[OpenSpec证据链怎么用]]
+- Workflow Agent 定义阶段顺序和完成条件，不亲自执行各阶段工作。
+- `control_stage_orchestrator_agent` 是流程状态机，不是第二个 Router。
+- `gate_stage_evaluator_agent` 只读已有交付物并输出 `go`、`warn` 或 `block`。
+- `stage_test_runner_agent` 的成功标准是业务链路闭环证据，不是“Docker 已启动”。
+- `stage_version_delivery_agent` 必须先解析本次需要 deploy 的具体服务，不能把“存在流水线”当成“已交付”。
+- 当前文档是目标设计；实际启用状态另见 [[目标agent落地状态]]。
