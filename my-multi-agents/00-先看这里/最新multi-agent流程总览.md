@@ -1,78 +1,64 @@
 ---
 title: "最新multi-agent流程总览"
-source: "conversation: Codex chat 2026-07-20"
+source: "my-multi-agents/00-先看这里/最新multi-agent流程总览.md"
 author: "Codex"
 published:
-created: 2026-07-20
-description: "当前确认的五类 Agent、四个 Workflow Agent 和开发职责 Agent 总流程。"
-tags: ["codex", "agent", "workflow", "architecture", "overview"]
+created: 2026-07-22
+description: "五个 Workflow 和十三个活跃 Agent 的完整流程。"
+tags: ["codex", "agent", "workflow", "mermaid"]
 type: "workflow"
-status: "processed"
+status: "evergreen"
 ---
 
 # 最新multi-agent流程总览
 
 ## 摘要
 
-当前目标架构不是一条固定的五类直线，而是五类 Agent 的协作模型：
+五个 Workflow 共用 Router、Orchestrator、Stage、Capability 和 Gate。正式需求和调查通过 `openSpecContext` 保持对象身份，通过 Root 执行能力后再由 Gate 判断证据。
 
-```text
-control -> workflow -> stage -> tool
-                    -> gate
-```
-
-其中 Router 只选择 Workflow，Orchestrator 负责执行 Workflow 的状态机，Stage Agent 对阶段结果负责，Tool Agent 提供受治理的原子能力，Gate Agent 只判断能否进入下一阶段。
-
-所有本地 Agent 统一使用：
-
-```text
-<layer>_<responsibility>_agent
-```
-
-## 总流程
+## 核心流程
 
 ```mermaid
-flowchart LR
-    U["用户请求"] --> R["control_request_router_agent"]
-    R --> W["workflow_*_agent"]
-    W --> O["control_stage_orchestrator_agent"]
-    O --> S["stage_*_agent"]
-    S --> T["tool_*_agent 或公共 Skill / MCP / Script"]
-    S --> G["gate_stage_evaluator_agent"]
-    G -->|go| O
-    G -->|warn| O
-    G -->|block| S
+flowchart TD
+    U["用户请求"] --> R["control_request_router"]
+    R --> WI["workflow_iterative_feature_development"]
+    R --> WR["workflow_rewrite_iterative_feature_development"]
+    R --> WB["workflow_bug_investigation"]
+    R --> WT["workflow_test_environment_validation"]
+    R --> WP["workflow_solve_personal_problem"]
+
+    WI --> O["control_stage_orchestrator"]
+    WR --> O
+    WB --> O
+    WT --> O
+    WP --> ROOT["Root Agent 按需调用公共能力"]
+
+    O --> S["当前 Stage Agent"]
+    S --> Q["capabilityRequests"]
+    Q --> O
+    O --> RC["requiredCapabilities"]
+    RC --> ROOT2["Root 执行 Tool / Skill / Script / MCP"]
+    ROOT2 --> E["capabilityEvidence"]
+    E --> G["gate_stage_evaluator"]
+    S --> G
+    G -- "go / warn" --> O
+    G -- "block" --> S
 ```
 
-## 四个 Workflow Agent
+## Workflow
 
-| Agent | 适用场景 | 顺序约束 |
+| Workflow ID | 场景 | 主链 |
 | --- | --- | --- |
-| `workflow_iterative_feature_development_agent` | 常规迭代开发，包括项目初始版本 | 严格 |
-| `workflow_rewrite_iterative_feature_development_agent` | 基于历史实现继续改造或重做现有迭代 | 严格 |
-| `workflow_bug_investigation_agent` | 先取证、定位根因，再决定是否修复 | 严格 |
-| `workflow_solve_personal_problem_agent` | 本地配置、知识维护、浏览器操作、个人自动化等 | 按任务动态编排 |
+| `workflow_iterative_feature_development` | 常规后端迭代，也覆盖项目初始能力 | 产品 -> 设计 -> 用例 -> 编码 -> CR -> 本地测试 -> 交付 |
+| `workflow_rewrite_iterative_feature_development` | 遗漏需求或已有 `bug-list.md` 的续改 | 设计 -> 用例 -> 编码 -> CR -> 本地测试 -> 重新交付 |
+| `workflow_bug_investigation` | 问题描述、异常或 traceId 排查 | 证据收集 -> 源码链路分析 -> 结论；不改代码 |
+| `workflow_test_environment_validation` | 交付后的测试环境验证 | 版本确认 -> 数据准备 -> Pod curl -> 结果核验 -> 归档 Gate 或 Bug 清单 |
+| `workflow_solve_personal_problem` | 本地配置、浏览器、知识维护、个人自动化 | Root Agent 使用最小能力，不强制 Stage 链 |
 
-## 开发职责 Stage Agent
+本地单独测试和单独交付不是新 Workflow，分别从 `stage_test_runner` 和 `stage_version_delivery` 进入迭代 Workflow。
 
-| Agent | 核心交付物 |
-| --- | --- |
-| `stage_product_owner_agent` | 清晰、可验收的需求范围与闭环问题 |
-| `stage_backend_designer_agent` | 后端改动点、接口和数据设计、风险与回归面 |
-| `stage_backend_developer_agent` | 后端实现、单元测试和可复现验证结果 |
-| `stage_frontend_developer_agent` | 按确认文案、交互和接口契约实现前端 |
-| `stage_test_case_designer_agent` | 独立测试用例、数据准备和回归逻辑 |
-| `stage_code_reviewer_agent` | 独立 CR 结论、问题清单和剩余风险 |
-| `stage_test_runner_agent` | 本地服务/Docker/跨服务联调、正式测试证据 |
-| `stage_version_delivery_agent` | 权限、依赖、部署、流水线、观察和归档闭环 |
+## 相关链接
 
-Bug 排查流程可使用 `stage_investigation_planner_agent`，但它不属于上述开发职责清单。
-
-## 关键规则
-
-- Workflow Agent 定义阶段顺序和完成条件，不亲自执行各阶段工作。
-- `control_stage_orchestrator_agent` 是流程状态机，不是第二个 Router。
-- `gate_stage_evaluator_agent` 只读已有交付物并输出 `go`、`warn` 或 `block`。
-- `stage_test_runner_agent` 的成功标准是业务链路闭环证据，不是“Docker 已启动”。
-- `stage_version_delivery_agent` 必须先解析本次需要 deploy 的具体服务，不能把“存在流水线”当成“已交付”。
-- 当前文档是目标设计；实际启用状态另见 [[目标agent落地状态]]。
+- [[my-multi-agents总览]]
+- [[当前运行架构和统一流程]]
+- [[Multi-Agent与OpenSpec边界]]

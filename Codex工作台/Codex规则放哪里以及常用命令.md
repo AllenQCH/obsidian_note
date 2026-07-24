@@ -398,5 +398,5 @@ OpenAI 官方 hooks 文档把 hooks 定义为：
 - [[Codex agent会读取哪些上下文]]
 - [[Skill放在哪里以及怎么维护]]
 - [[Obsidian笔记怎么写]]
-- [[我的Codex多agent改造计划]]
+- [[最新multi-agent流程总览]]
 - [[已落地能力总清单]]

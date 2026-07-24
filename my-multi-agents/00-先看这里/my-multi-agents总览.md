@@ -3,41 +3,45 @@ title: "my-multi-agents总览"
 source: "my-multi-agents/00-先看这里/my-multi-agents总览.md"
 author: "Codex"
 published:
-created: 2026-07-05
-description: "个人 multi-agent 目标架构与研究资料的总入口。"
+created: 2026-07-22
+description: "个人 Codex Multi-Agent 当前运行架构的唯一入口。"
 tags: ["codex", "agent", "workflow", "index"]
 type: "workflow"
-status: "processed"
+status: "evergreen"
 ---
 
 # my-multi-agents总览
 
 ## 摘要
 
-这里记录的是个人 Codex multi-agent 的**目标架构**，不是当前运行态清单。目标模型包含五类 Agent：`control`、`workflow`、`stage`、`tool`、`gate`；所有本地 Agent 都用 `<layer>_<responsibility>_agent` 命名。
+当前 Multi-Agent 已覆盖旧运行框架。运行时注册 2 个 Control、9 个 Stage、1 个 Tool 和 1 个 Gate，共 13 个 Agent；5 个 `workflow_*` 是 `control_stage_orchestrator` 使用的状态机定义，不单独注册 Agent。AliDocs 提测文档通过 `tool_alidocs_test_delivery_agent` 提供独立治理入口；日志、SQL、GitHub、流水线等其余旧 `tool_*` 角色仍退出注册，由 Stage 或 Root Agent 直接调用公共 Skill/Script。
 
-是否已经运行，必须以 `~/.codex/config.toml` 和对应 TOML 文件为准，不能以本目录的设计文档为准。
+OpenSpec 与 Multi-Agent 分开：项目内 `openspec/` 是开发期事实；中央 `/Users/heytea/Documents/myHeytea/code/my-openspec` 管理项目规范、需求绑定、调查和不可变归档。
 
-## 最短阅读路径
+GitHub 便携仓库 `AllenQCH/multi-agent` 只发布 12 个核心 Agent，不包含公司专用 Tool Agent；不要用便携版数量覆盖本机运行时事实。
+
+## 阅读顺序
 
 1. [[最新multi-agent流程总览]]
-2. [[所有agent五层结构和统一流程]]
-3. [[目标agent注册表]]
-4. [[用户说法对应哪个agent]]
-5. [[开发流程强制门禁改造]]
+2. [[当前运行架构和统一流程]]
+3. [[当前agent注册表]]
+4. [[九个Stage职责]]
+5. [[Workflow路由和使用方式]]
+6. [[开发流程Gate规则]]
+7. [[测试执行和版本交付]]
+8. [[Multi-Agent与OpenSpec边界]]
 
-## 内容分区
+## 事实源
 
-| 目录 | 内容 | 入口 |
-| --- | --- | --- |
-| `00-先看这里` | 当前确认的目标设计、范围和下一步 | [[最新multi-agent流程总览]] |
-| `01-Xuetao-agent原型` | 外部原型的原始事实和可迁移原则 | [[Xuetao agent原型总览]] |
-| `02-我的agents原理` | 本地五层模型、职责、命名和证据边界 | [[我的agents原理总览]] |
-| `03-我的agent用例` | 具体任务如何进入五层链路 | [[我的agent用例总览]] |
+- 激活事实：`~/.codex/config.toml`
+- Agent 合同：`~/.codex/agents/{control,stage,tool,gate}/*.toml`
+- Workflow：`~/.codex/agents/docs/agent-workflows.md`
+- 公共能力：`~/.codex/agents/docs/tool-agent-matrix.md`
+- 中央 OpenSpec：`/Users/heytea/Documents/myHeytea/code/my-openspec`
+- Xuetao 历史资料：[[xuetao-library总览]]
 
-## 当前边界
+## 相关链接
 
-- 这轮只确认架构与文档，不代表已完成运行时注册。
-- 暂不增加独立 subflow；需要时由 Workflow Agent 编排 Stage Agent。
-- Skill、MCP、Script 是能力，不与 Agent 混用命名。
-- 运行时迁移时再逐项核对 TOML、注册表、引用和验证脚本。
+- [[my-openspec总览]]
+- [[Multi-Agent与OpenSpec边界]]
+- [[xuetao-library总览]]
